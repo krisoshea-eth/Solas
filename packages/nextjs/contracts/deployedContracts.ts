@@ -125,6 +125,8 @@ const deployedContracts = {
   },
   sepolia: {
     SchemaRegistry: {
+      address:
+        "0x00293748ea7a6e2005464040b08063bbff5f1cdde3373c4bc6ebcbc7b0c1a6ff",
       abi: [
         {
           type: "impl",

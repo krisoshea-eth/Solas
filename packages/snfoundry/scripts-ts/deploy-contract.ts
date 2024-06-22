@@ -98,44 +98,43 @@ const deployContract = async (
 
   try {
     // CHANGED THIS SCRIPT HERE
-    const declare = await deployer.declare({
-      contract: compiledContractSierra,
-      casm: compiledContractCasm,
-    });
-    await provider.waitForTransaction(declare.transaction_hash);
-    console.log("Declared contract txn", declare.transaction_hash);
-    console.log("Declared contract class hash", declare.class_hash);
+    // const declare = await deployer.declare({
+    //   contract: compiledContractSierra,
+    //   casm: compiledContractCasm,
+    // });
+    // await provider.waitForTransaction(declare.transaction_hash);
+    // console.log("Declared contract txn", declare.transaction_hash);
+    // console.log("Declared contract class hash", declare.class_hash);
 
-    const deploy = await deployer.deployContract({
-      classHash: precomputedClassHash,
-      salt: stark.randomAddress(),
-    });
+    // const deploy = await deployer.deployContract({
+    //   classHash: precomputedClassHash,
+    //   salt: stark.randomAddress(),
+    // });
     
-    await provider.waitForTransaction(deploy.transaction_hash);
-    console.log("Deployed contract txn", deploy.transaction_hash);
-    console.log("Deployed contract address", deploy.contract_address);
-    console.log("Deployed contract deployer", deploy.deployer);
-
-    contractAddress = deploy.contract_address;
+    // await provider.waitForTransaction(deploy.transaction_hash);
+    // console.log("Deployed contract txn", deploy.transaction_hash);
+    // console.log("Deployed contract address", deploy.contract_address);
+    // console.log("Deployed contract deployer", deploy.deployer);
+    // contractAddress = deploy.contract_address;
 
     // ORIGINAL SCRIPT
-    // const tryDeclareAndDeploy = await deployer.declareAndDeploy(
-    //   {
-    //     contract: compiledContractSierra,
-    //     casm: compiledContractCasm,
-    //     constructorCalldata,
-    //   },
-    //   {
-    //     maxFee: totalFee,
-    //   }
-    // );
-    // if (!tryDeclareAndDeploy.deploy.contract_address) {
-    //   throw new Error(
-    //     "Failed to deploy contract, try setting up a manual fee on deployContract, set maxFee to 0.001 ETH in WEI and increase it if needed."
-    //   );
-    // }
-    // contractAddress =
-    //   "0x" + tryDeclareAndDeploy.deploy.address.slice(2).padStart(64, "0");
+    const tryDeclareAndDeploy = await deployer.declareAndDeploy(
+      {
+        contract: compiledContractSierra,
+        casm: compiledContractCasm,
+        constructorCalldata,
+      },
+      {
+        maxFee: totalFee,
+      }
+    );
+    if (!tryDeclareAndDeploy.deploy.contract_address) {
+      throw new Error(
+        "Failed to deploy contract, try setting up a manual fee on deployContract, set maxFee to 0.001 ETH in WEI and increase it if needed."
+      );
+    }
+    contractAddress =
+      "0x" + tryDeclareAndDeploy.deploy.address.slice(2).padStart(64, "0");
   } catch (e) {
     console.log("catch block of declareAndDeploy");
     console.log("Error", e);
