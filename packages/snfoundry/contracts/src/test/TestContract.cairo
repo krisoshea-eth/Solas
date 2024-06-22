@@ -27,3 +27,4 @@
 
 //     assert_eq!(dispatcher.gretting(), new_greeting, "Should allow setting a new message");
 // }
+
