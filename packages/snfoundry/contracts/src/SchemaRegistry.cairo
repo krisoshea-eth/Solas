@@ -16,7 +16,6 @@ pub trait ISchemaRegistry<TContractState> {
 
 #[starknet::contract]
 mod SchemaRegistry {
-
     use super::{ContractAddress, ISchemaRegistry};
 
     /// @notice A struct representing a record for a submitted schema.

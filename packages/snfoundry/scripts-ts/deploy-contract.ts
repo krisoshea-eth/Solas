@@ -110,7 +110,7 @@ const deployContract = async (
     //   classHash: precomputedClassHash,
     //   salt: stark.randomAddress(),
     // });
-    
+
     // await provider.waitForTransaction(deploy.transaction_hash);
     // console.log("Deployed contract txn", deploy.transaction_hash);
     // console.log("Deployed contract address", deploy.contract_address);
