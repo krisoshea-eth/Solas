@@ -20,6 +20,11 @@ export type Attestation = {
     expiration: string;
     revoked: string;
 };
+export type Schema = {
+    uid: string;
+    schema: string;
+    attestations: number;
+};
 
 export const fetchStats = async (): Promise<{ totalAtestations: number, totalSchemas: number, totalAttestors: number }> => {
     const totalAtestations: number = 100;
@@ -32,6 +37,39 @@ export const fetchStats = async (): Promise<{ totalAtestations: number, totalSch
         totalAttestors,
     };
 }
+export const fetchAllSchemas = async () => {
+    // Replace this with your actual fetch call to get attestation data
+    return [
+        {
+            uid: "0x041e7455a1009c150268b1bfec337246e4539f07885315b69495dac1abf5ff4c",
+            schema: "address author uint stakeAmaount uint royaltyAmount",
+            attestations: 100
+        },
+        {
+            uid: "0x041e7455a1009c150268b1bfec337246e4539f07885315b69495dac1abf5ff4c",
+            schema: "address author uint stakeAmaount uint royaltyAmount",
+            attestations: 45
+        },
+        {
+            uid: "0x041e7455a1009c150268b1bfec337246e4539f07885315b69495dac1abf5ff4c",
+            schema: "address author uint stakeAmaount uint royaltyAmount",
+            attestations: 33
+        },
+    ];
+
+}
+
+// Dummy fetch function to simulate fetching attestation data
+export const fetchSchema = async (uuid: string): Promise<Schema> => {
+    // Replace this with your actual fetch call to get attestation data
+    return {
+        uid: uuid,
+        schema: 'address author uint stakeAmaount uint royaltyAmount',
+        attestations: 100
+   
+    };
+};
+
 export const fetchAllAttestations = async () => {
     // Replace this with your actual fetch call to get attestation data
     return [
@@ -119,7 +157,7 @@ export const timeAgo = (timestamp: number): string => {
     const now = Date.now();
     const past = timestamp * 1000; // Convert seconds to milliseconds
     const diff = now - past;
-  
+
     const seconds = Math.floor(diff / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
@@ -127,7 +165,7 @@ export const timeAgo = (timestamp: number): string => {
     const weeks = Math.floor(days / 7);
     const months = Math.floor(days / 30);
     const years = Math.floor(days / 365);
-  
+
     if (years > 0) return `${years} year${years > 1 ? 's' : ''} ago`;
     if (months > 0) return `${months} month${months > 1 ? 's' : ''} ago`;
     if (weeks > 0) return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
@@ -135,5 +173,4 @@ export const timeAgo = (timestamp: number): string => {
     if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
     if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
     return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
-  };
-  
+};
