@@ -5,14 +5,12 @@
 
 const deployedContracts = {
   devnet: {
-    YourContract: {
-      address:
-        "0x044565ce852d3eb78527b6746a07a77abef4fc6a31de461f864f652f950242a0",
+    SchemaRegistry: {
       abi: [
         {
           type: "impl",
-          name: "YourContractImpl",
-          interface_name: "contracts::YourContract::IYourContract",
+          name: "SchemaRegistryImpl",
+          interface_name: "contracts::SchemaRegistry::ISchemaRegistry",
         },
         {
           type: "struct",
@@ -33,16 +31,121 @@ const deployedContracts = {
           ],
         },
         {
-          type: "struct",
-          name: "core::integer::u256",
-          members: [
+          type: "enum",
+          name: "core::bool",
+          variants: [
             {
-              name: "low",
-              type: "core::integer::u128",
+              name: "False",
+              type: "()",
             },
             {
-              name: "high",
+              name: "True",
+              type: "()",
+            },
+          ],
+        },
+        {
+          type: "interface",
+          name: "contracts::SchemaRegistry::ISchemaRegistry",
+          items: [
+            {
+              type: "function",
+              name: "register",
+              inputs: [
+                {
+                  name: "schema",
+                  type: "core::byte_array::ByteArray",
+                },
+                {
+                  name: "revocable",
+                  type: "core::bool",
+                },
+              ],
+              outputs: [
+                {
+                  type: "core::integer::u128",
+                },
+              ],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "get_schema",
+              inputs: [
+                {
+                  name: "uid",
+                  type: "core::integer::u128",
+                },
+              ],
+              outputs: [
+                {
+                  type: "(core::integer::u128, core::bool, core::byte_array::ByteArray)",
+                },
+              ],
+              state_mutability: "view",
+            },
+          ],
+        },
+        {
+          type: "event",
+          name: "contracts::SchemaRegistry::SchemaRegistry::Registered",
+          kind: "struct",
+          members: [
+            {
+              name: "uid",
               type: "core::integer::u128",
+              kind: "key",
+            },
+            {
+              name: "caller",
+              type: "core::starknet::contract_address::ContractAddress",
+              kind: "data",
+            },
+            {
+              name: "schema_record",
+              type: "core::byte_array::ByteArray",
+              kind: "data",
+            },
+          ],
+        },
+        {
+          type: "event",
+          name: "contracts::SchemaRegistry::SchemaRegistry::Event",
+          kind: "enum",
+          variants: [
+            {
+              name: "Registered",
+              type: "contracts::SchemaRegistry::SchemaRegistry::Registered",
+              kind: "nested",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  sepolia: {
+    SchemaRegistry: {
+      abi: [
+        {
+          type: "impl",
+          name: "SchemaRegistryImpl",
+          interface_name: "contracts::SchemaRegistry::ISchemaRegistry",
+        },
+        {
+          type: "struct",
+          name: "core::byte_array::ByteArray",
+          members: [
+            {
+              name: "data",
+              type: "core::array::Array::<core::bytes_31::bytes31>",
+            },
+            {
+              name: "pending_word",
+              type: "core::felt252",
+            },
+            {
+              name: "pending_word_len",
+              type: "core::integer::u32",
             },
           ],
         },
@@ -62,197 +165,76 @@ const deployedContracts = {
         },
         {
           type: "interface",
-          name: "contracts::YourContract::IYourContract",
+          name: "contracts::SchemaRegistry::ISchemaRegistry",
           items: [
             {
               type: "function",
-              name: "gretting",
-              inputs: [],
-              outputs: [
-                {
-                  type: "core::byte_array::ByteArray",
-                },
-              ],
-              state_mutability: "view",
-            },
-            {
-              type: "function",
-              name: "set_gretting",
+              name: "register",
               inputs: [
                 {
-                  name: "new_greeting",
+                  name: "schema",
                   type: "core::byte_array::ByteArray",
                 },
                 {
-                  name: "amount_eth",
-                  type: "core::integer::u256",
-                },
-              ],
-              outputs: [],
-              state_mutability: "external",
-            },
-            {
-              type: "function",
-              name: "withdraw",
-              inputs: [],
-              outputs: [],
-              state_mutability: "external",
-            },
-            {
-              type: "function",
-              name: "premium",
-              inputs: [],
-              outputs: [
-                {
+                  name: "revocable",
                   type: "core::bool",
                 },
               ],
-              state_mutability: "view",
-            },
-          ],
-        },
-        {
-          type: "impl",
-          name: "OwnableImpl",
-          interface_name: "openzeppelin::access::ownable::interface::IOwnable",
-        },
-        {
-          type: "interface",
-          name: "openzeppelin::access::ownable::interface::IOwnable",
-          items: [
-            {
-              type: "function",
-              name: "owner",
-              inputs: [],
               outputs: [
                 {
-                  type: "core::starknet::contract_address::ContractAddress",
+                  type: "core::integer::u128",
+                },
+              ],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "get_schema",
+              inputs: [
+                {
+                  name: "uid",
+                  type: "core::integer::u128",
+                },
+              ],
+              outputs: [
+                {
+                  type: "(core::integer::u128, core::bool, core::byte_array::ByteArray)",
                 },
               ],
               state_mutability: "view",
             },
-            {
-              type: "function",
-              name: "transfer_ownership",
-              inputs: [
-                {
-                  name: "new_owner",
-                  type: "core::starknet::contract_address::ContractAddress",
-                },
-              ],
-              outputs: [],
-              state_mutability: "external",
-            },
-            {
-              type: "function",
-              name: "renounce_ownership",
-              inputs: [],
-              outputs: [],
-              state_mutability: "external",
-            },
-          ],
-        },
-        {
-          type: "constructor",
-          name: "constructor",
-          inputs: [
-            {
-              name: "owner",
-              type: "core::starknet::contract_address::ContractAddress",
-            },
           ],
         },
         {
           type: "event",
-          name: "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferred",
+          name: "contracts::SchemaRegistry::SchemaRegistry::Registered",
           kind: "struct",
           members: [
             {
-              name: "previous_owner",
-              type: "core::starknet::contract_address::ContractAddress",
+              name: "uid",
+              type: "core::integer::u128",
               kind: "key",
             },
             {
-              name: "new_owner",
+              name: "caller",
               type: "core::starknet::contract_address::ContractAddress",
-              kind: "key",
-            },
-          ],
-        },
-        {
-          type: "event",
-          name: "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferStarted",
-          kind: "struct",
-          members: [
-            {
-              name: "previous_owner",
-              type: "core::starknet::contract_address::ContractAddress",
-              kind: "key",
+              kind: "data",
             },
             {
-              name: "new_owner",
-              type: "core::starknet::contract_address::ContractAddress",
-              kind: "key",
-            },
-          ],
-        },
-        {
-          type: "event",
-          name: "openzeppelin::access::ownable::ownable::OwnableComponent::Event",
-          kind: "enum",
-          variants: [
-            {
-              name: "OwnershipTransferred",
-              type: "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferred",
-              kind: "nested",
-            },
-            {
-              name: "OwnershipTransferStarted",
-              type: "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferStarted",
-              kind: "nested",
-            },
-          ],
-        },
-        {
-          type: "event",
-          name: "contracts::YourContract::YourContract::GreetingChanged",
-          kind: "struct",
-          members: [
-            {
-              name: "greeting_setter",
-              type: "core::starknet::contract_address::ContractAddress",
-              kind: "key",
-            },
-            {
-              name: "new_greeting",
+              name: "schema_record",
               type: "core::byte_array::ByteArray",
-              kind: "key",
-            },
-            {
-              name: "premium",
-              type: "core::bool",
-              kind: "data",
-            },
-            {
-              name: "value",
-              type: "core::integer::u256",
               kind: "data",
             },
           ],
         },
         {
           type: "event",
-          name: "contracts::YourContract::YourContract::Event",
+          name: "contracts::SchemaRegistry::SchemaRegistry::Event",
           kind: "enum",
           variants: [
             {
-              name: "OwnableEvent",
-              type: "openzeppelin::access::ownable::ownable::OwnableComponent::Event",
-              kind: "flat",
-            },
-            {
-              name: "GreetingChanged",
-              type: "contracts::YourContract::YourContract::GreetingChanged",
+              name: "Registered",
+              type: "contracts::SchemaRegistry::SchemaRegistry::Registered",
               kind: "nested",
             },
           ],
