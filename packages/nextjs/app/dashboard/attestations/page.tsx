@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { fetchAllAttestations, fetchStats, shortAddress } from "~~/utils/utils";
+import { fetchAllAttestations, shortAddress } from "~~/utils/utils";
 import Modal from "~~/components/Modal";
 import CreateAttestationForm from "~~/components/forms/CreateAttestationForm";
 const Dashboard = () => {
@@ -19,9 +19,6 @@ const Dashboard = () => {
   const getAttestations = async () => {
     try {
       const attestationData = await fetchAllAttestations();
-      const stats = await fetchStats();
-      setAttestations(attestationData);
-      setStats(stats);
     } catch (error) {
       console.error("Error fetching attestations:", error);
     }
