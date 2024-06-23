@@ -1,115 +1,115 @@
 [
-    {
-      "name": "SchemaRegistryImpl",
-      "type": "impl",
-      "interface_name": "contracts::SchemaRegistry::ISchemaRegistry"
-    },
-    {
-      "name": "core::byte_array::ByteArray",
-      "type": "struct",
-      "members": [
-        {
-          "name": "data",
-          "type": "core::array::Array::<core::bytes_31::bytes31>"
-        },
-        {
-          "name": "pending_word",
-          "type": "core::felt252"
-        },
-        {
-          "name": "pending_word_len",
-          "type": "core::integer::u32"
-        }
-      ]
-    },
-    {
-      "name": "core::bool",
-      "type": "enum",
-      "variants": [
-        {
-          "name": "False",
-          "type": "()"
-        },
-        {
-          "name": "True",
-          "type": "()"
-        }
-      ]
-    },
-    {
-      "name": "contracts::SchemaRegistry::ISchemaRegistry",
-      "type": "interface",
-      "items": [
-        {
-          "name": "register",
-          "type": "function",
-          "inputs": [
-            {
-              "name": "schema",
-              "type": "core::byte_array::ByteArray"
-            },
-            {
-              "name": "revocable",
-              "type": "core::bool"
-            }
-          ],
-          "outputs": [
-            {
-              "type": "core::integer::u128"
-            }
-          ],
-          "state_mutability": "external"
-        },
-        {
-          "name": "get_schema",
-          "type": "function",
-          "inputs": [
-            {
-              "name": "uid",
-              "type": "core::integer::u128"
-            }
-          ],
-          "outputs": [
-            {
-              "type": "(core::integer::u128, core::bool, core::byte_array::ByteArray)"
-            }
-          ],
-          "state_mutability": "view"
-        }
-      ]
-    },
-    {
-      "kind": "struct",
-      "name": "contracts::SchemaRegistry::SchemaRegistry::Registered",
-      "type": "event",
-      "members": [
-        {
-          "kind": "key",
-          "name": "uid",
-          "type": "core::integer::u128"
-        },
-        {
-          "kind": "data",
-          "name": "caller",
-          "type": "core::starknet::contract_address::ContractAddress"
-        },
-        {
-          "kind": "data",
-          "name": "schema_record",
-          "type": "core::byte_array::ByteArray"
-        }
-      ]
-    },
-    {
-      "kind": "enum",
-      "name": "contracts::SchemaRegistry::SchemaRegistry::Event",
-      "type": "event",
-      "variants": [
-        {
-          "kind": "nested",
-          "name": "Registered",
-          "type": "contracts::SchemaRegistry::SchemaRegistry::Registered"
-        }
-      ]
-    }
-  ]
+  {
+    "name": "SchemaRegistryImpl",
+    "type": "impl",
+    "interface_name": "contracts::SchemaRegistry::ISchemaRegistry"
+  },
+  {
+    "name": "core::byte_array::ByteArray",
+    "type": "struct",
+    "members": [
+      {
+        "name": "data",
+        "type": "core::array::Array::<core::bytes_31::bytes31>"
+      },
+      {
+        "name": "pending_word",
+        "type": "core::felt252"
+      },
+      {
+        "name": "pending_word_len",
+        "type": "core::integer::u32"
+      }
+    ]
+  },
+  {
+    "name": "core::bool",
+    "type": "enum",
+    "variants": [
+      {
+        "name": "False",
+        "type": "()"
+      },
+      {
+        "name": "True",
+        "type": "()"
+      }
+    ]
+  },
+  {
+    "name": "contracts::SchemaRegistry::ISchemaRegistry",
+    "type": "interface",
+    "items": [
+      {
+        "name": "register",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "schema",
+            "type": "core::byte_array::ByteArray"
+          },
+          {
+            "name": "revocable",
+            "type": "core::bool"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u128"
+          }
+        ],
+        "state_mutability": "external"
+      },
+      {
+        "name": "get_schema",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "uid",
+            "type": "core::integer::u128"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "(core::integer::u128, core::bool, core::byte_array::ByteArray)"
+          }
+        ],
+        "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "name": "contracts::SchemaRegistry::SchemaRegistry::Registered",
+    "type": "event",
+    "members": [
+      {
+        "kind": "key",
+        "name": "uid",
+        "type": "core::integer::u128"
+      },
+      {
+        "kind": "data",
+        "name": "caller",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "kind": "data",
+        "name": "schema_record",
+        "type": "core::byte_array::ByteArray"
+      }
+    ]
+  },
+  {
+    "kind": "enum",
+    "name": "contracts::SchemaRegistry::SchemaRegistry::Event",
+    "type": "event",
+    "variants": [
+      {
+        "kind": "nested",
+        "name": "Registered",
+        "type": "contracts::SchemaRegistry::SchemaRegistry::Registered"
+      }
+    ]
+  }
+]

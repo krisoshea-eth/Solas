@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { fetchAllAttestations, fetchStats, shortAddress} from "~~/utils/utils";
+import { fetchAllAttestations, fetchStats, shortAddress } from "~~/utils/utils";
 import Modal from "~~/components/Modal";
 import CreateAttestationForm from "~~/components/forms/CreateAttestationForm";
 const Dashboard = () => {

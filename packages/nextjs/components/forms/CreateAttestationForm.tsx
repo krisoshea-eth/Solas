@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
 import { useAccount, useContractRead } from "@starknet-react/core";
-import {displayTxResult} from "~~/app/debug/_components/contract/utilsDisplay";
+import { displayTxResult } from "~~/app/debug/_components/contract/utilsDisplay";
 import ERC20_ABI from "~~/utils/solas-abis/ERC20.json";
 
 const CreateAttestationForm = () => {
@@ -128,8 +128,9 @@ const CreateAttestationForm = () => {
       //@ts-ignore
       {isLoading && <div>Loading ...</div>}
       {isError || (!data && <div>{error?.message}</div>)}
-
-      {data && <div className="text-blue-900">{displayTxResult(data, false)}</div>}
+      {data && (
+        <div className="text-blue-900">{displayTxResult(data, false)}</div>
+      )}
     </div>
   );
 };

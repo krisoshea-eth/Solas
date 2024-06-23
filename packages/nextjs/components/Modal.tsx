@@ -1,4 +1,4 @@
-import React, { ReactNode, ReactElement, useState } from 'react';
+import React, { ReactNode, ReactElement, useState } from "react";
 
 interface ModalProps {
   children: ReactNode;

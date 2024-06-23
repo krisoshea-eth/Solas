@@ -1,14 +1,14 @@
-'use client';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const RegisterSchemaForm = () => {
   const router = useRouter();
 
-    const isPending = false;
-    const isConfirming = false;
-    const isConfirmed = false;
-    const isSuccess = false;
+  const isPending = false;
+  const isConfirming = false;
+  const isConfirmed = false;
+  const isSuccess = false;
 
   const LoadingSpinner = (
     <svg
@@ -32,17 +32,15 @@ const RegisterSchemaForm = () => {
     if (isConfirmed) {
       // redirect to dashboard
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push("/dashboard");
       }, 5000);
     }
   }, [isPending, isConfirming, isConfirmed]);
 
-
   const handleSubmit = (formData: FormData) => {
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const profileImage = formData.get('profileImage');
-
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const profileImage = formData.get("profileImage");
   };
 
   return (
@@ -102,7 +100,7 @@ const RegisterSchemaForm = () => {
             </a>
           </p>
           <p>
-            Go to your{' '}
+            Go to your{" "}
             <a href="/dashboard" className="text-blue-500 hover:underline">
               dashboard
             </a>
@@ -110,7 +108,6 @@ const RegisterSchemaForm = () => {
           </p>
         </div>
       )}
-
     </div>
   );
 };
