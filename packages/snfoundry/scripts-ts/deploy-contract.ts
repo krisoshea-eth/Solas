@@ -4,7 +4,7 @@ import { networks } from "./helpers/networks";
 import yargs from "yargs";
 import { CallData, hash } from "starknet-dev";
 import { Network } from "./types";
-import { LegacyContractClass, CompiledSierra, RawArgs } from "starknet";
+import { LegacyContractClass, CompiledSierra, RawArgs, stark } from "starknet";
 
 const argv = yargs(process.argv.slice(2)).argv;
 const networkName: string = argv["network"];
@@ -50,6 +50,9 @@ const deployContract = async (
   const precomputedClassHash = hash.computeSierraContractClassHash(
     compiledContractSierra
   );
+
+  console.log("precomputedClassHash ", precomputedClassHash);
+
   const contractCalldata = new CallData(compiledContractSierra.abi);
   const constructorCalldata = constructorArgs
     ? contractCalldata.compile("constructor", constructorArgs)
@@ -91,8 +94,30 @@ const deployContract = async (
   }
 
   totalFee = options?.maxFee || totalFee * 20n; // this optional max fee serves when error AccountValidation Failed or small fee on public networks , try 5n , 10n, 20n, 50n, 100n
+  console.log("totalFee ", totalFee);
 
   try {
+    // CHANGED THIS SCRIPT HERE
+    // const declare = await deployer.declare({
+    //   contract: compiledContractSierra,
+    //   casm: compiledContractCasm,
+    // });
+    // await provider.waitForTransaction(declare.transaction_hash);
+    // console.log("Declared contract txn", declare.transaction_hash);
+    // console.log("Declared contract class hash", declare.class_hash);
+
+    // const deploy = await deployer.deployContract({
+    //   classHash: precomputedClassHash,
+    //   salt: stark.randomAddress(),
+    // });
+
+    // await provider.waitForTransaction(deploy.transaction_hash);
+    // console.log("Deployed contract txn", deploy.transaction_hash);
+    // console.log("Deployed contract address", deploy.contract_address);
+    // console.log("Deployed contract deployer", deploy.deployer);
+    // contractAddress = deploy.contract_address;
+
+    // ORIGINAL SCRIPT
     const tryDeclareAndDeploy = await deployer.declareAndDeploy(
       {
         contract: compiledContractSierra,
@@ -111,6 +136,7 @@ const deployContract = async (
     contractAddress =
       "0x" + tryDeclareAndDeploy.deploy.address.slice(2).padStart(64, "0");
   } catch (e) {
+    console.log("catch block of declareAndDeploy");
     console.log("Error", e);
   }
   console.log("Deployed contract ", contractName, " at: ", contractAddress);
