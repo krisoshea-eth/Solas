@@ -52,12 +52,10 @@ const CreateAttestationForm = () => {
         router.push("/dashboard");
       }, 5000);
     }
-  }, [isPending, isConfirming, isConfirmed]);
+  }, [isPending, isConfirming, isConfirmed,router]);
 
   const handleSubmit = (formData: FormData) => {
-    const name = formData.get("name");
-    const email = formData.get("email");
-    const profileImage = formData.get("profileImage");
+
   };
 
   return (
@@ -125,7 +123,6 @@ const CreateAttestationForm = () => {
           </p>
         </div>
       )}
-      //@ts-ignore
       {isLoading && <div>Loading ...</div>}
       {isError || (!data && <div>{error?.message}</div>)}
       {data && (
