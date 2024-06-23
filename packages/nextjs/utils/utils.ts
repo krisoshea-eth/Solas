@@ -27,22 +27,6 @@ export type Schema = {
   attestations: number;
 };
 
-// FETCH FUNCTIONS
-export const fetchStats = async (): Promise<{
-  totalAtestations: number;
-  totalSchemas: number;
-  totalAttestors: number;
-}> => {
-  const totalAtestations: number = 100;
-  const totalSchemas: number = 14;
-  const totalAttestors: number = 452;
-  // Replace this with your actual fetch call to get analytics data
-  return {
-    totalAtestations,
-    totalSchemas,
-    totalAttestors,
-  };
-};
 export const fetchAllSchemas = async () => {
   // Replace this with your actual fetch call to get attestation data
   return [
@@ -154,7 +138,7 @@ export const shortAddress = (addr: string): string => {
     "..." +
     addr
       .toString()
-      .substring(addr.toString().length - 4, addr.toString().length + 1)
+      .substring(addr.toString().length - 6, addr.toString().length + 1)
   );
 };
 
@@ -178,4 +162,10 @@ export const timeAgo = (timestamp: number): string => {
   if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
   if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
   return `${seconds} second${seconds > 1 ? "s" : ""} ago`;
+};
+
+export const stringifyBigInt = (obj: any) => {
+  return JSON.stringify(obj, (_, value) =>
+    typeof value === "bigint" ? value.toString() : value,
+  );
 };

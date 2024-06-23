@@ -1,14 +1,34 @@
 "use client";
-import { useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-stark/useScaffoldWriteContract";
 
 const RegisterSchemaForm = () => {
+  const [schema, setSchema] = useState<string>("");
+  const [revocable, setRevocable] = useState<boolean>(false);
   const router = useRouter();
 
-  const isPending = false;
-  const isConfirming = false;
-  const isConfirmed = false;
-  const isSuccess = false;
+  const { writeAsync, isSuccess, isPending, isError } =
+    useScaffoldWriteContract({
+      contractName: "SchemaRegistry",
+      functionName: "register",
+      args: [schema, false],
+    });
+
+  const handleSubmit = async (formData: FormData) => {
+    const schema = formData.get("schema") as string;
+    const revocable = formData.get("revocable") as string;
+
+    setSchema(schema);
+    setRevocable(revocable === "true");
+    try {
+      await writeAsync({
+        args: [schema, true],
+      });
+    } catch (err) {
+      console.error("Error submitting transaction:", err);
+    }
+  };
 
   const LoadingSpinner = (
     <svg
@@ -28,25 +48,10 @@ const RegisterSchemaForm = () => {
     </svg>
   );
 
-  useEffect(() => {
-    if (isConfirmed) {
-      // redirect to dashboard
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 5000);
-    }
-  }, [isPending, isConfirming, isConfirmed, router]);
-
-  const handleSubmit = (formData: FormData) => {
-    const name = formData.get("name");
-    const email = formData.get("email");
-    const profileImage = formData.get("profileImage");
-  };
-
   return (
     <div className="">
-      <h1 className="text-3xl text-[#495FA9]  mb-4">Register Schema</h1>
-      <form action={handleSubmit} className=" rounded-lg  space-y-4">
+      <h1 className="text-3xl text-[#495FA9] mb-4">Register Schema</h1>
+      <form action={handleSubmit} className="rounded-lg space-y-4">
         <input
           type="text"
           name="schema"
@@ -54,61 +59,39 @@ const RegisterSchemaForm = () => {
           required
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         />
-        <input
-          type="text"
+        <span className="block text-sm text-gray-600">Revocable</span>
+        <select
           name="revocable"
-          placeholder="Revocable"
           required
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        />
-        {!isPending && !isConfirming && (
-          <button
-            type="submit"
-            className="w-full bg-[#495FA9] text-white py-2 px-4 rounded-lg hover:bg-[#475299]"
-          >
-            Register
-          </button>
-        )}
-        {(isPending || isConfirming) && (
-          <div className="flex justify-center items-center">
-            {LoadingSpinner}
-          </div>
-        )}
+        >
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+        <button
+          type="submit"
+          className="w-full bg-[#495FA9] text-white py-2 px-4 rounded-lg hover:bg-[#475299]"
+        >
+          {isPending ? "Processing..." : "Register"}
+        </button>
       </form>
-      {isPending && !isSuccess && (
-        <div className="mt-4 text-center text-gray-700">
-          Please sign the transaction with your wallet.
+      {isPending && (
+        <div className="flex justify-center items-center mt-4">
+          {LoadingSpinner}
         </div>
       )}
-      {isSuccess && isConfirming && (
-        <div className="mt-4 text-center text-gray-700">
-          Waiting for confirmation...
-        </div>
-      )}
-      {isConfirmed && (
+      {isSuccess && (
         <div className="mt-4 text-center text-green-600">
           Transaction confirmed. You will be redirected to your dashboard.
-          <p>
-            View on Etherscan:
-            <a
-              href={`https://etherscan.io/tx/`}
-              rel="noreferrer"
-              target="_blank"
-              className="text-blue-500 hover:underline"
-            >
-              Transaction Link
-            </a>
-          </p>
-          <p>
-            Go to your{" "}
-            <a href="/dashboard" className="text-blue-500 hover:underline">
-              dashboard
-            </a>
-            .
-          </p>
+        </div>
+      )}
+      {isError && (
+        <div className="mt-4 text-center text-red-600">
+          Error submitting transaction.
         </div>
       )}
     </div>
   );
 };
+
 export default RegisterSchemaForm;

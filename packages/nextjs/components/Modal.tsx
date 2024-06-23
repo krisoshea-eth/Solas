@@ -16,14 +16,16 @@ const Modal: React.FC<ModalProps> = ({ children, trigger }) => {
       {trigger({ openModal })}
       {isOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center p-8 z-50">
-          <div className="bg-white p-6 rounded-xl shadow-lg w-11/12 max-w-lg">
+          <div className="bg-white p-6 rounded-xl shadow-lg w-11/12 max-w-lg ">
             {children}
-            <button
-              className="mt-4 text-gray-500 hover:underline"
-              onClick={closeModal}
-            >
-              Close
-            </button>
+            <div className="flex flex-col items-center">
+              <button
+                className="mt-4 mx-auto text-gray-500 hover:underline"
+                onClick={closeModal}
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
