@@ -1,7 +1,7 @@
 import { provider } from "~~/utils/Provider";
 import { Contract } from 'starknet';
 
-import ERC20abi from "~~/utils/solas-abis/erc20abi.json";
+import ERC20abi from "~~/utils/solas-abis/ERC20.json";
 const contractAddress = '0x041e7455a1009c150268b1bfec337246e4539f07885315b69495dac1abf5ff4c';
 
 const contract = new Contract(ERC20abi, contractAddress, provider);
@@ -26,6 +26,8 @@ export type Schema = {
     attestations: number;
 };
 
+  
+// FETCH FUNCTIONS
 export const fetchStats = async (): Promise<{ totalAtestations: number, totalSchemas: number, totalAttestors: number }> => {
     const totalAtestations: number = 100;
     const totalSchemas: number = 14;

@@ -1,14 +1,31 @@
-'use client';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
+import { useAccount, useContractRead } from "@starknet-react/core";
+import {displayTxResult} from "~~/app/debug/_components/contract/utilsDisplay";
+import ERC20_ABI from "~~/utils/solas-abis/ERC20.json";
 
 const CreateAttestationForm = () => {
+  const testAddress =
+    "0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7";
+  const toAddress =
+    "0x1176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8";
+
+  const { data, isError, isLoading, error } = useContractRead({
+    functionName: "balanceOf",
+    args: [toAddress],
+    abi: ERC20_ABI,
+    address: testAddress,
+    watch: true,
+  });
+
   const router = useRouter();
 
-    const isPending = false;
-    const isConfirming = false;
-    const isConfirmed = false;
-    const isSuccess = false;
+  const isPending = false;
+  const isConfirming = false;
+  const isConfirmed = false;
+  const isSuccess = false;
 
   const LoadingSpinner = (
     <svg
@@ -32,17 +49,15 @@ const CreateAttestationForm = () => {
     if (isConfirmed) {
       // redirect to dashboard
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push("/dashboard");
       }, 5000);
     }
   }, [isPending, isConfirming, isConfirmed]);
 
-
   const handleSubmit = (formData: FormData) => {
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const profileImage = formData.get('profileImage');
-
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const profileImage = formData.get("profileImage");
   };
 
   return (
@@ -102,7 +117,7 @@ const CreateAttestationForm = () => {
             </a>
           </p>
           <p>
-            Go to your{' '}
+            Go to your{" "}
             <a href="/dashboard" className="text-blue-500 hover:underline">
               dashboard
             </a>
@@ -110,7 +125,11 @@ const CreateAttestationForm = () => {
           </p>
         </div>
       )}
+      //@ts-ignore
+      {isLoading && <div>Loading ...</div>}
+      {isError || (!data && <div>{error?.message}</div>)}
 
+      {data && <div className="text-blue-900">{displayTxResult(data, false)}</div>}
     </div>
   );
 };
