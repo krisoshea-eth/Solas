@@ -6,6 +6,8 @@
 const deployedContracts = {
   devnet: {
     SchemaRegistry: {
+      address:
+        "0x01e118bd0158076bbe64f87f5519ee7c074ca5cb618a80bf7741b2ec3187aafb",
       abi: [
         {
           type: "impl",
@@ -126,7 +128,7 @@ const deployedContracts = {
   sepolia: {
     SchemaRegistry: {
       address:
-        "0x00293748ea7a6e2005464040b08063bbff5f1cdde3373c4bc6ebcbc7b0c1a6ff",
+        "0x067bdf6bf6f1b72315c541abdc443cdd55992ea29546933ddfec19cb200fce87",
       abi: [
         {
           type: "impl",
