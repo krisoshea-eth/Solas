@@ -65,7 +65,10 @@ mod SchemaRegistry {
             let schema_clone = schema.clone();
             let registered_schema = SchemaRecord { uid, revocable, schema };
 
-            self.emit(Registered { uid, caller: get_caller_address(), schema_record: schema_clone });
+            self
+                .emit(
+                    Registered { uid, caller: get_caller_address(), schema_record: schema_clone }
+                );
 
             self.registry.write(uid, registered_schema);
             uid
