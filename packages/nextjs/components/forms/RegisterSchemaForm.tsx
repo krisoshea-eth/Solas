@@ -35,7 +35,7 @@ const RegisterSchemaForm = () => {
         router.push("/dashboard");
       }, 5000);
     }
-  }, [isPending, isConfirming, isConfirmed,router]);
+  }, [isPending, isConfirming, isConfirmed, router]);
 
   const handleSubmit = (formData: FormData) => {
     const name = formData.get("name");

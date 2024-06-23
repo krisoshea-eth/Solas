@@ -52,11 +52,9 @@ const CreateAttestationForm = () => {
         router.push("/dashboard");
       }, 5000);
     }
-  }, [isPending, isConfirming, isConfirmed,router]);
+  }, [isPending, isConfirming, isConfirmed, router]);
 
-  const handleSubmit = (formData: FormData) => {
-
-  };
+  const handleSubmit = (formData: FormData) => {};
 
   return (
     <div className="">
