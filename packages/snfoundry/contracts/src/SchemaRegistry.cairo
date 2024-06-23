@@ -1,5 +1,5 @@
 // This contract is responsible for registering and retrieving schemas for Solas.
-use starknet::ContractAddress;
+use starknet::{ContractAddress, get_caller_address};
 
 #[starknet::interface]
 pub trait ISchemaRegistry<TContractState> {
@@ -16,7 +16,7 @@ pub trait ISchemaRegistry<TContractState> {
 
 #[starknet::contract]
 mod SchemaRegistry {
-    use super::{ContractAddress, ISchemaRegistry};
+    use super::{ContractAddress, ISchemaRegistry, get_caller_address};
 
     /// @notice A struct representing a record for a submitted schema.
     #[derive(Drop, Serde, starknet::Store)]
@@ -62,10 +62,12 @@ mod SchemaRegistry {
             self.current_uid.write(self.current_uid.read() + 1);
 
             let uid = self.current_uid.read();
+            let schema_clone = schema.clone();
+            let registered_schema = SchemaRecord { uid, revocable, schema };
 
-            let schema_record = SchemaRecord { uid, revocable, schema };
+            self.emit(Registered { uid, caller: get_caller_address(), schema_record: schema_clone });
 
-            self.registry.write(uid, schema_record);
+            self.registry.write(uid, registered_schema);
             uid
         }
     }
