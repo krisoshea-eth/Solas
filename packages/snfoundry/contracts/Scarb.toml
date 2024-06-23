@@ -15,3 +15,5 @@ casm = true
 
 [tool.fmt]
 sort-module-level-items = true
+
+[tool.snforge]
