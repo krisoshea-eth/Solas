@@ -54,12 +54,12 @@ const CreateAttestationForm = () => {
 
   return (
     <div className="">
-      <h1 className="text-3xl text-[#495FA9] mb-4">Register Schema</h1>
+      <h1 className="text-3xl text-[#495FA9] mb-4">Create Attestation</h1>
       <form action={handleSubmit} className="rounded-lg space-y-4">
         <input
           type="number"
           name="schema"
-          placeholder="Schema"
+          placeholder="Schema UID(1,2...)"
           required
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         />
