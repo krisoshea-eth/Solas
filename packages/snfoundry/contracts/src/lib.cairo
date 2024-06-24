@@ -1,5 +1,5 @@
-mod SAS;
-mod YourContract;
+// mod SAS;
+mod AttestationRegistry;
 mod SchemaRegistry;
 #[cfg(test)]
 mod test {
