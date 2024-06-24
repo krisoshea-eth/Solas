@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-stark/useScaffoldEventHistory";
 import Modal from "~~/components/Modal";
-import RegisterSchemaForm from "~~/components/forms/RegisterSchemaForm";
+import CreateAttestationForm from "~~/components/forms/CreateAttestationForm";
 
 const Attestations = () => {
   const [totalSchemas, setTotalSchemas] = useState<number>(0);
@@ -73,10 +73,10 @@ const Attestations = () => {
           <div className="flex justify-between items-center mb-6">
             <div>
               <h1 className="text-2xl font-bold text-[#495FA9]">
-                Solas Schemas
+                Solas Attestations
               </h1>
               <p className="text-gray-600">
-                Showing the most recent Solas Schemas.
+                Showing the most recent Solas Attestations.
               </p>
             </div>
 
@@ -90,7 +90,7 @@ const Attestations = () => {
                 </button>
               )}
             >
-              <RegisterSchemaForm />
+              <CreateAttestationForm />
             </Modal>
           </div>
           <DashboardStats totalSchemas={totalSchemas} />
@@ -120,7 +120,7 @@ const Attestations = () => {
                     <th className="px-4 py-2 text-[#495FA9]">UID</th>
                     <th className="px-4 py-2 text-[#495FA9]">Attester</th>
                     <th className="px-4 py-2 text-[#495FA9]">Recipient</th>
-                    <th className="px-4 py-2 text-[#495FA9]">Schema UI</th>
+                    <th className="px-4 py-2 text-[#495FA9]">Schema UID</th>
                     <th className="px-4 py-2 text-[#495FA9]">Timestamp</th>
                   </tr>
                 </thead>
