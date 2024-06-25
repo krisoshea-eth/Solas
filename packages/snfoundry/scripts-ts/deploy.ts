@@ -9,11 +9,12 @@ const deployScript = async (): Promise<void> => {
   // );
 
   await deployContract(
-  {
-    schema_registry_address: "0x048ec8a62f68659ed94e57e497e154d96cc4d5356ef35a58c6b3f4e034325a8f", // the deployer address is the owner of the contract,
-  },
-  "AttestationRegistry"
-);
+    {
+      schema_registry_address:
+        "0x048ec8a62f68659ed94e57e497e154d96cc4d5356ef35a58c6b3f4e034325a8f", // the deployer address is the owner of the contract,
+    },
+    "AttestationRegistry"
+  );
 };
 
 // await deployContract(

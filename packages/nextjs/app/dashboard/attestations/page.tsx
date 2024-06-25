@@ -24,7 +24,7 @@ const Attestations = () => {
     enabled: true,
   });
 
-/*   struct Attested {
+  /*   struct Attested {
     #[key]
     recipient: ContractAddress,
     #[key]
@@ -125,7 +125,6 @@ const Attestations = () => {
                   </tr>
                 </thead>
                 <tbody>
-        
                   {schemas.map((schema, index) => (
                     <tr key={index} className="border-b">
                       <td className="px-4 py-2">

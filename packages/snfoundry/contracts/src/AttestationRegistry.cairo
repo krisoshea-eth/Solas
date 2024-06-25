@@ -3,8 +3,14 @@ use super::SchemaRegistry::{ISchemaRegistry, ISchemaRegistryDispatcher};
 
 #[starknet::interface]
 pub trait IAttestationRegistry<TContractState> {
-    fn attest(ref self: TContractState, schema_uid: u128, recipient: ContractAddress, data: ByteArray, revocable: bool) -> u128;
-    // fn revoke(ref self: TContractState, request: RevocationRequest);
+    fn attest(
+        ref self: TContractState,
+        schema_uid: u128,
+        recipient: ContractAddress,
+        data: ByteArray,
+        revocable: bool
+    ) -> u128;
+// fn revoke(ref self: TContractState, request: RevocationRequest);
 }
 
 // Define structs
@@ -40,11 +46,10 @@ struct AttestationRequest {
 //     data: RevocationRequestData,
 // }
 
-
 #[starknet::contract]
 mod AttestationRegistry {
-    use core::traits::Into;
     use contracts::SchemaRegistry::ISchemaRegistryDispatcherTrait;
+    use core::traits::Into;
     use starknet::{get_caller_address, get_block_timestamp};
     use super::{
         ContractAddress, IAttestationRegistry, AttestationRequest, Attestation,
@@ -95,14 +100,20 @@ mod AttestationRegistry {
     }
 
     // Constructor
-#[constructor]
+    #[constructor]
     fn constructor(ref self: ContractState, schema_registry_address: ContractAddress) {
         self.schema_registry.write(schema_registry_address);
     }
 
     #[abi(embed_v0)]
     impl AttestationRegistryImpl of IAttestationRegistry<ContractState> {
-        fn attest(ref self: ContractState, schema_uid: u128, recipient: ContractAddress, data: ByteArray, revocable: bool) -> u128 {
+        fn attest(
+            ref self: ContractState,
+            schema_uid: u128,
+            recipient: ContractAddress,
+            data: ByteArray,
+            revocable: bool
+        ) -> u128 {
             let contract_address = self.schema_registry.read();
             // let (fetched_uid, fetched_revocable, fetched_schema) = ISchemaRegistryDispatcher { contract_address }
             //     .get_schema(schema_uid);
@@ -144,8 +155,7 @@ mod AttestationRegistry {
 
             uid
         }
-
-        // fn revoke(ref self: ContractState, request: RevocationRequest) {}
+    // fn revoke(ref self: ContractState, request: RevocationRequest) {}
     }
 }
 
