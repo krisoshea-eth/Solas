@@ -57,10 +57,16 @@ const Attestations = () => {
     </Link>
   );
 
-  const DashboardStats = ({ totalAttestations }: { totalAttestations: number }) => (
+  const DashboardStats = ({
+    totalAttestations,
+  }: {
+    totalAttestations: number;
+  }) => (
     <div className="flex justify-around mb-6">
       <div className="text-center">
-        <div className="text-3xl font-bold text-[#495FA9]">{totalAttestations}</div>
+        <div className="text-3xl font-bold text-[#495FA9]">
+          {totalAttestations}
+        </div>
         <div className="text-gray-600">Total Schemas</div>
       </div>
     </div>

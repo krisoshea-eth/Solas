@@ -24,7 +24,7 @@ type DisplayContent =
 export const displayTxResult = (
   displayContent: DisplayContent | DisplayContent[],
   asText: boolean,
-  functionOutputs: readonly AbiOutput[] = []
+  functionOutputs: readonly AbiOutput[] = [],
 ): string | ReactElement | number => {
   if (displayContent == null) {
     return "";

@@ -9,7 +9,7 @@ const contract = new Contract(ERC20abi, contractAddress, provider);
 
 export type Attestation = {
   attester: any;
-  data: any
+  data: any;
   recipient: any;
   revocable: any;
   revocation_time: any;

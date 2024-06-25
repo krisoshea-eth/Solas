@@ -44,7 +44,7 @@ export default function AttestationPage({
         revocable: rawAttestation.revocable.toString(),
         revocation_time: rawAttestation.revocation_time.toString(),
         schema_uid: rawAttestation.schema_uid.toString(),
-        time:  timeAgo(rawAttestation.time.toString()),
+        time: timeAgo(rawAttestation.time.toString()),
         uid: rawAttestation.uid.toString(),
       };
       console.log("Mapped Attestation:", mappedAttestation);
