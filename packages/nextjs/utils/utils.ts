@@ -8,19 +8,16 @@ const contractAddress =
 const contract = new Contract(ERC20abi, contractAddress, provider);
 
 export type Attestation = {
-  uid: string;
-  schema: string;
-  isEndorsement: boolean;
-  name: string;
-  domain: string;
-  context: string;
-  ipfsHash: string;
-  from: string;
-  to: string;
-  created: string;
-  expiration: string;
-  revoked: string;
+  attester: any;
+  data: any
+  recipient: any;
+  revocable: any;
+  revocation_time: any;
+  schema_uid: any;
+  time: any;
+  uid: any;
 };
+
 export type Schema = {
   uid: string;
   schema: string;

@@ -6,8 +6,8 @@ import Modal from "~~/components/Modal";
 import CreateAttestationForm from "~~/components/forms/CreateAttestationForm";
 
 const Attestations = () => {
-  const [totalSchemas, setTotalSchemas] = useState<number>(0);
-  const [schemas, setSchemas] = useState<any[]>([]);
+  const [totalAttestations, setTotalAttestations] = useState<number>(0);
+  const [attestations, setAttestations] = useState<any[]>([]);
 
   const {
     data: eventData,
@@ -38,8 +38,8 @@ const Attestations = () => {
   useEffect(() => {
     if (eventData) {
       console.log(eventData);
-      setTotalSchemas(eventData.length);
-      setSchemas(
+      setTotalAttestations(eventData.length);
+      setAttestations(
         eventData.map((event) => ({
           recipient: event.args.recipient,
           attester: event.args.attester,
@@ -51,16 +51,16 @@ const Attestations = () => {
     }
   }, [eventData]);
 
-  const SchemaLink = ({ uid }: { uid: string }) => (
+  const AttestationLink = ({ uid }: { uid: string }) => (
     <Link href={`/dashboard/attestation/${uid}`} className="text-[#495FA9]">
       {uid.toString()}
     </Link>
   );
 
-  const DashboardStats = ({ totalSchemas }: { totalSchemas: number }) => (
+  const DashboardStats = ({ totalAttestations }: { totalAttestations: number }) => (
     <div className="flex justify-around mb-6">
       <div className="text-center">
-        <div className="text-3xl font-bold text-[#495FA9]">{totalSchemas}</div>
+        <div className="text-3xl font-bold text-[#495FA9]">{totalAttestations}</div>
         <div className="text-gray-600">Total Schemas</div>
       </div>
     </div>
@@ -93,7 +93,7 @@ const Attestations = () => {
               <CreateAttestationForm />
             </Modal>
           </div>
-          <DashboardStats totalSchemas={totalSchemas} />
+          <DashboardStats totalAttestations={totalAttestations} />
           {isLoading ? (
             <div className="flex justify-center items-center">
               <svg
@@ -125,10 +125,10 @@ const Attestations = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {schemas.map((schema, index) => (
+                  {attestations.map((schema, index) => (
                     <tr key={index} className="border-b">
                       <td className="px-4 py-2">
-                        <SchemaLink uid={schema.uid} />
+                        <AttestationLink uid={schema.uid} />
                       </td>
                       <td className="px-4 py-2 text-[#495FA9]">
                         {schema.attester}
