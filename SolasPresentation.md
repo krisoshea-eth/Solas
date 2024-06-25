@@ -41,3 +41,8 @@ data: {
 - Allow delegated attestations (Contract receives a signed attestation and attests onchain on behalf of user)
 - Implement Revoke
 - Implement option to refer an attestation
+
+## Sepolia Deployment Addresses
+
+SchemaRegistry: 0x067bdf6bf6f1b72315c541abdc443cdd55992ea29546933ddfec19cb200fce87
+AttestationRegistry: 0x034f38c70a7d4b1bab0b919c923545e74b188f95915b92b5febf12b0dafe6686

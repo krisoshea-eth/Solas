@@ -12,7 +12,7 @@ const deployScript = async (): Promise<void> => {
   await deployContract(
     {
       schema_registry_address:
-        "0x00417a5d2dc2fe77a06f1b7efe316e789cf9fbfb2630c502d9907ed16994af67", // the deployer address is the owner of the contract,
+        "0x067bdf6bf6f1b72315c541abdc443cdd55992ea29546933ddfec19cb200fce87", // the deployer address is the owner of the contract,
     },
     "AttestationRegistry"
   );
