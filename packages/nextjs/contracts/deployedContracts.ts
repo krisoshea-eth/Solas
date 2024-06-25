@@ -360,9 +360,128 @@ const deployedContracts = {
     },
   },
   sepolia: {
+    SchemaRegistry: {
+      address:
+        "0x067bdf6bf6f1b72315c541abdc443cdd55992ea29546933ddfec19cb200fce87",
+      abi: [
+        {
+          type: "impl",
+          name: "SchemaRegistryImpl",
+          interface_name: "contracts::SchemaRegistry::ISchemaRegistry",
+        },
+        {
+          type: "struct",
+          name: "core::byte_array::ByteArray",
+          members: [
+            {
+              name: "data",
+              type: "core::array::Array::<core::bytes_31::bytes31>",
+            },
+            {
+              name: "pending_word",
+              type: "core::felt252",
+            },
+            {
+              name: "pending_word_len",
+              type: "core::integer::u32",
+            },
+          ],
+        },
+        {
+          type: "enum",
+          name: "core::bool",
+          variants: [
+            {
+              name: "False",
+              type: "()",
+            },
+            {
+              name: "True",
+              type: "()",
+            },
+          ],
+        },
+        {
+          type: "interface",
+          name: "contracts::SchemaRegistry::ISchemaRegistry",
+          items: [
+            {
+              type: "function",
+              name: "register",
+              inputs: [
+                {
+                  name: "schema",
+                  type: "core::byte_array::ByteArray",
+                },
+                {
+                  name: "revocable",
+                  type: "core::bool",
+                },
+              ],
+              outputs: [
+                {
+                  type: "core::integer::u128",
+                },
+              ],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "get_schema",
+              inputs: [
+                {
+                  name: "uid",
+                  type: "core::integer::u128",
+                },
+              ],
+              outputs: [
+                {
+                  type: "(core::integer::u128, core::bool, core::byte_array::ByteArray)",
+                },
+              ],
+              state_mutability: "view",
+            },
+          ],
+        },
+        {
+          type: "event",
+          name: "contracts::SchemaRegistry::SchemaRegistry::Registered",
+          kind: "struct",
+          members: [
+            {
+              name: "uid",
+              type: "core::integer::u128",
+              kind: "key",
+            },
+            {
+              name: "caller",
+              type: "core::starknet::contract_address::ContractAddress",
+              kind: "data",
+            },
+            {
+              name: "schema_record",
+              type: "core::byte_array::ByteArray",
+              kind: "data",
+            },
+          ],
+        },
+        {
+          type: "event",
+          name: "contracts::SchemaRegistry::SchemaRegistry::Event",
+          kind: "enum",
+          variants: [
+            {
+              name: "Registered",
+              type: "contracts::SchemaRegistry::SchemaRegistry::Registered",
+              kind: "nested",
+            },
+          ],
+        },
+      ],
+    },
     AttestationRegistry: {
       address:
-        "0x077cf1b7bb4ce74559dbbab85714f1d69e520657670639ff77c9e99eedeb13f6",
+        "0x034f38c70a7d4b1bab0b919c923545e74b188f95915b92b5febf12b0dafe6686",
       abi: [
         {
           type: "impl",
