@@ -15,19 +15,20 @@ const CreateAttestationForm = () => {
     useScaffoldWriteContract({
       contractName: "AttestationRegistry",
       functionName: "attest",
-      args: [schema, recipient, data, revocable],
+      args: [15, recipient, data, false],
     });
 
   const handleSubmit = async (formData: FormData) => {
     const revocableFetched = formData.get("revocable") as string;
     const recipient = formData.get("recipient") as string;
     const data = formData.get("data") as string;
-
-    setSchema(0);
+    setRecipient(recipient);
+    setData(data);
+    setSchema(15);
     setRevocable(revocableFetched === "true");
     try {
       await writeAsync({
-        args: [schema, recipient, data, revocable],
+        args: [15, recipient, data, false],
       });
     } catch (err) {
       console.error("Error submitting transaction:", err);
