@@ -3,6 +3,7 @@ use super::SchemaRegistry::{ISchemaRegistry, ISchemaRegistryDispatcher};
 
 #[starknet::interface]
 pub trait IAttestationRegistry<TContractState> {
+    // fn get_attestation(self: @TContractState, attestation_uid: u128) -> (u128, u128, u64, ContractAddress, ContractAddress, ByteArray, bool, u64);
     fn attest(
         ref self: TContractState,
         schema_uid: u128,
@@ -10,41 +11,35 @@ pub trait IAttestationRegistry<TContractState> {
         data: ByteArray,
         revocable: bool
     ) -> u128;
-// fn revoke(ref self: TContractState, request: RevocationRequest);
+    fn revoke(ref self: TContractState, schema_uid: u128, attestation_uid: u128);
 }
 
 // Define structs
-#[derive(Drop, Serde, starknet::Store)]
+#[derive(Drop, Serde, starknet::Store, Clone)]
 struct Attestation {
     uid: u128,
     schema_uid: u128,
     time: u64,
-    // expiration_time: u64,
     recipient: ContractAddress,
     attester: ContractAddress,
     data: ByteArray,
+    revocable: bool,
+    revocation_time: u64,
 }
 
 #[derive(Drop, Serde, starknet::Store)]
 struct AttestationRequest {
     schema_uid: u128,
     recipient: ContractAddress,
-    // expiration_time: u64,
     data: ByteArray,
     revocable: bool
 }
 
-// #[derive(Drop, Serde, starknet::Store)]
-// struct RevocationRequestData {
-//     uid: felt252,
-//     value: u256,
-// }
-
-// #[derive(Drop, Serde, starknet::Store)]
-// struct RevocationRequest {
-//     schema: felt252,
-//     data: RevocationRequestData,
-// }
+#[derive(Drop, Serde, starknet::Store)]
+struct RevocationRequest {
+    schema_uid: u128,
+    attestation_uid: u128,
+}
 
 #[starknet::contract]
 mod AttestationRegistry {
@@ -58,16 +53,14 @@ mod AttestationRegistry {
 
     // Define constants
     const EMPTY_UID: u128 = 0;
-    const NO_EXPIRATION_TIME: u64 = 0;
+    const NO_TIME: u64 = 0;
 
     // Events
     #[event]
     #[derive(Drop, starknet::Event)]
     enum Event {
         Attested: Attested,
-    // Revoked: Revoked,
-    // Timestamped: Timestamped,
-    // RevokedOffchain: RevokedOffchain,
+        Revoked: Revoked,
     }
 
     #[derive(Drop, starknet::Event)]
@@ -82,21 +75,22 @@ mod AttestationRegistry {
         timestamp: u64,
     }
 
-    // // The global mapping between attestations and their UIDs.
-    // mapping(bytes32 uid => Attestation attestation) private _db;
+    #[derive(Drop, starknet::Event)]
+    struct Revoked {
+        #[key]
+        recipient: ContractAddress,
+        #[key]
+        attester: ContractAddress,
+        #[key]
+        schema_uid: u128,
+        attestation_uid: u128,
+    }
 
-    // // The global mapping between data and their timestamps.
-    // mapping(bytes32 data => uint64 timestamp) private _timestamps;
-
-    // // The global mapping between data and their revocation timestamps.
-    // mapping(address revoker => mapping(bytes32 data => uint64 timestamp) timestamps) private _revocationsOffchain;
     #[storage]
     struct Storage {
         schema_registry: ContractAddress,
         db: LegacyMap::<u128, Attestation>,
-        timestamps: LegacyMap::<felt252, u64>,
         current_uid: u128,
-    // revocations_offchain: LegacyMap::<(ContractAddress, felt252), u64>,
     }
 
     // Constructor
@@ -107,6 +101,11 @@ mod AttestationRegistry {
 
     #[abi(embed_v0)]
     impl AttestationRegistryImpl of IAttestationRegistry<ContractState> {
+        // fn get_attestation(self: @ContractState, attestation_uid: u128) -> (u128, u128, u64, ContractAddress, ContractAddress, ByteArray, bool, u64) {
+        //     let data = self.db.read(attestation_uid);
+        //     (data.uid, data.schema_uid, data.time, data.recipient, data.attester, data.data, data.revocable, data.revocation_time)
+        // }  
+        
         fn attest(
             ref self: ContractState,
             schema_uid: u128,
@@ -115,25 +114,26 @@ mod AttestationRegistry {
             revocable: bool
         ) -> u128 {
             let contract_address = self.schema_registry.read();
-            // let (fetched_uid, fetched_revocable, fetched_schema) = ISchemaRegistryDispatcher { contract_address }
-            //     .get_schema(schema_uid);
+            // check if schema exists
+            let (fetched_uid, fetched_revocable, _) = ISchemaRegistryDispatcher { contract_address }
+                .get_schema(schema_uid);
 
-            // assert!(fetched_uid != EMPTY_UID, "Schema Not Found");
-            // assert!(
-            //     request.expiration_time != NO_EXPIRATION_TIME
-            //         && request.expiration_time <= get_block_timestamp(),
-            //     "Invalid Expiration Time"
-            // );
-            // assert!(!fetched_revocable && revocable, "Irrevocable");
+            assert!(fetched_uid != EMPTY_UID, "Schema Not Found");
+
+            // check we are not trying to revoke an irrevocable schema
+            if (!fetched_revocable && revocable) {
+                panic!("Irrevocable");
+            }
 
             let mut attestation = Attestation {
                 uid: EMPTY_UID,
                 schema_uid,
                 time: get_block_timestamp(),
-                // expiration_time: request.expiration_time,
                 recipient,
                 attester: get_caller_address(),
-                data
+                data,
+                revocable: fetched_revocable,
+                revocation_time: 0,
             };
 
             self.current_uid.write(self.current_uid.read() + 1);
@@ -155,7 +155,43 @@ mod AttestationRegistry {
 
             uid
         }
-    // fn revoke(ref self: ContractState, request: RevocationRequest) {}
+        fn revoke(ref self: ContractState, schema_uid: u128, attestation_uid: u128) {
+            let contract_address = self.schema_registry.read();
+
+            // check if schema exists
+            let (fetched_schema_uid, _, _) = ISchemaRegistryDispatcher { contract_address }
+                .get_schema(schema_uid);
+
+            assert!(fetched_schema_uid != EMPTY_UID, "Schema Not Found");
+
+            // check if attestation we are trying to revoke exists
+            let mut fetched_attestation = self.db.read(attestation_uid);
+            assert!(fetched_attestation.uid != EMPTY_UID, "Attestation Not Found");
+
+            // check we are not trying to revoke an irrevocable schema
+            assert!(fetched_attestation.revocable, "Irrevocable");
+
+            // ensure that we aren't trying to revoke the same attestation twice
+            assert!(fetched_attestation.revocation_time == NO_TIME, "Already Revoked");
+
+            let revoker = get_caller_address();
+            // allow only original attesters to revoke their attestations
+            assert!(fetched_attestation.attester == revoker, "Access Denied");
+
+            fetched_attestation.revocation_time = get_block_timestamp();
+
+            self.db.write(attestation_uid, fetched_attestation.clone());
+
+            self
+                .emit(
+                    Revoked {
+                        recipient: fetched_attestation.recipient,
+                        attester: revoker,
+                        schema_uid,
+                        attestation_uid,
+                    }
+                );
+        }
     }
 }
 

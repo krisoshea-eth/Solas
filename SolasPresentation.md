@@ -39,3 +39,5 @@ data: {
 
 - Ability to refer other attestations
 - Allow delegated attestations (Contract receives a signed attestation and attests onchain on behalf of user)
+- Implement Revoke
+- Implement option to refer an attestation

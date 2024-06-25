@@ -7,15 +7,17 @@ const deployScript = async (): Promise<void> => {
   //   },
   //   "SchemaRegistry",
   // );
+  // 0x077cf1b7bb4ce74559dbbab85714f1d69e520657670639ff77c9e99eedeb13f6
 
   await deployContract(
     {
       schema_registry_address:
-        "0x048ec8a62f68659ed94e57e497e154d96cc4d5356ef35a58c6b3f4e034325a8f", // the deployer address is the owner of the contract,
+        "0x00417a5d2dc2fe77a06f1b7efe316e789cf9fbfb2630c502d9907ed16994af67", // the deployer address is the owner of the contract,
     },
     "AttestationRegistry"
   );
 };
+// 0x03cdf276779fe3c83772cadc086b676c98bd602bcb8078c3736df49bb4003d0f
 
 // await deployContract(
 //   {
