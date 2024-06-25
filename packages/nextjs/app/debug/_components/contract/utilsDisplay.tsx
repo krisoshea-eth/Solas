@@ -24,7 +24,7 @@ type DisplayContent =
 export const displayTxResult = (
   displayContent: DisplayContent | DisplayContent[],
   asText: boolean,
-  functionOutputs: readonly AbiOutput[] = [],
+  functionOutputs: readonly AbiOutput[] = []
 ): string | ReactElement | number => {
   if (displayContent == null) {
     return "";
@@ -32,6 +32,7 @@ export const displayTxResult = (
   if (functionOutputs != null && functionOutputs.length != 0) {
     const type = functionOutputs[0].type;
     const parsedParam = parseParamWithType(type, displayContent, true);
+    console.log(parsedParam);
 
     if (typeof parsedParam === "bigint") {
       const asNumber = Number(parsedParam);

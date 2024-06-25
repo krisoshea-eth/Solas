@@ -3,7 +3,7 @@ use super::SchemaRegistry::{ISchemaRegistry, ISchemaRegistryDispatcher};
 
 #[starknet::interface]
 pub trait IAttestationRegistry<TContractState> {
-    // fn get_attestation(self: @TContractState, attestation_uid: u128) -> (u128, u128, u64, ContractAddress, ContractAddress, ByteArray, bool, u64);
+    fn get_attestation(self: @TContractState, attestation_uid: u128) -> Attestation;
     fn attest(
         ref self: TContractState,
         schema_uid: u128,
@@ -101,11 +101,20 @@ mod AttestationRegistry {
 
     #[abi(embed_v0)]
     impl AttestationRegistryImpl of IAttestationRegistry<ContractState> {
-        // fn get_attestation(self: @ContractState, attestation_uid: u128) -> (u128, u128, u64, ContractAddress, ContractAddress, ByteArray, bool, u64) {
-        //     let data = self.db.read(attestation_uid);
-        //     (data.uid, data.schema_uid, data.time, data.recipient, data.attester, data.data, data.revocable, data.revocation_time)
-        // }  
-        
+        fn get_attestation(self: @ContractState, attestation_uid: u128) -> Attestation {
+            let data = self.db.read(attestation_uid);
+            Attestation {
+                uid: data.uid,
+                schema_uid: data.schema_uid,
+                time: data.time,
+                recipient: data.recipient,
+                attester: data.attester,
+                data: data.data,
+                revocable: data.revocable,
+                revocation_time: data.revocation_time,
+            }
+        }
+
         fn attest(
             ref self: ContractState,
             schema_uid: u128,
