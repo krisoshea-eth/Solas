@@ -26,12 +26,6 @@ export default function AttestationPage({
   });
 
   useEffect(() => {
-    console.log("UUID:", uid);
-    console.log("Loading:", isLoading);
-    console.log("Success:", isSuccess);
-    console.log("Error:", isError);
-    console.log("Fetched Attestation:", fetchedAttestation);
-
     if (isSuccess && fetchedAttestation) {
       // Check if fetchedAttestation is an object
       const rawAttestation = fetchedAttestation as any;

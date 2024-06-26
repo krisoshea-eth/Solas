@@ -32,7 +32,7 @@ const Schemas = () => {
         eventData.map((event) => ({
           uid: event.args.uid,
           schema: event.args.schema_record,
-          caller:shortAddress(event.args.caller),
+          caller: shortAddress(event.args.caller),
         })),
       );
     }
@@ -102,38 +102,40 @@ const Schemas = () => {
             </div>
           ) : (
             <div>
-            <div className="overflow-x-auto shadow-md rounded-lg">
-              <table className="min-w-full bg-white border border-gray-200 ">
-                <thead>
-                  <tr className="bg-gray-100 border-b">
-                    <th className="px-4 py-2 text-[#495FA9]">UID</th>
-                    <th className="px-4 py-2 text-[#495FA9]">Creator</th>
-                    <th className="px-4 py-2 text-[#495FA9]">Schema Record</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {schemas.map((schema, index) => (
-                    <tr key={index} className="border-b">
-                      <td className="px-4 py-2">
-                        <SchemaLink uid={schema.uid} />
-                      </td>
-                      <td className="px-4 py-2 text-[#495FA9]">
-                        {schema.caller}
-                      </td>
-                      <td className="px-4 py-2 text-[#495FA9]">
-                        {schema.schema}
-                      </td>
+              <div className="overflow-x-auto shadow-md rounded-lg">
+                <table className="min-w-full bg-white border border-gray-200 ">
+                  <thead>
+                    <tr className="bg-gray-100 border-b">
+                      <th className="px-4 py-2 text-[#495FA9]">UID</th>
+                      <th className="px-4 py-2 text-[#495FA9]">Creator</th>
+                      <th className="px-4 py-2 text-[#495FA9]">
+                        Schema Record
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-              
+                  </thead>
+                  <tbody>
+                    {schemas.map((schema, index) => (
+                      <tr key={index} className="border-b">
+                        <td className="px-4 py-2">
+                          <SchemaLink uid={schema.uid} />
+                        </td>
+                        <td className="px-4 py-2 text-[#495FA9]">
+                          {schema.caller}
+                        </td>
+                        <td className="px-4 py-2 text-[#495FA9]">
+                          {schema.schema}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="mt-4 text-center">
+                <a className="text-[#495FA9]" href="/attestations">
+                  View all Schemas
+                </a>
+              </div>
             </div>
-                      <div className="mt-4 text-center">
-                      <a className="text-[#495FA9]" href="/attestations">
-                        View all Schemas
-                      </a>
-                    </div></div>
           )}
         </div>
       </div>

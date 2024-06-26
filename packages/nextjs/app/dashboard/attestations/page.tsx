@@ -45,9 +45,9 @@ const Attestations = () => {
           recipient: shortAddress(event.args.recipient),
           attester: shortAddress(event.args.attester),
           uid: event.args.uid,
-          schema: (event.args.schema_uid).toString(),
-          timestamp: timeAgo((event.args.timestamp).toString()),
-        }))
+          schema: event.args.schema_uid.toString(),
+          timestamp: timeAgo(event.args.timestamp.toString()),
+        })),
       );
     }
   }, [eventData]);

@@ -79,7 +79,7 @@ export const Header = () => {
   const burgerMenuRef = useRef<HTMLDivElement>(null);
   useOutsideClick(
     burgerMenuRef,
-    useCallback(() => setIsDrawerOpen(false), [])
+    useCallback(() => setIsDrawerOpen(false), []),
   );
   return (
     <div className="sticky lg:static top-0 navbar bg-[#475299] min-h-0 flex-shrink-0 justify-between z-20  px-0 sm:px-2">

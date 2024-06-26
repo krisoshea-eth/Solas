@@ -86,25 +86,6 @@ export const fetchAllAttestations = async () => {
   ];
 };
 
-// Dummy fetch function to simulate fetching attestation data
-export const fetchAttestation = async (uuid: string): Promise<Attestation> => {
-  // Replace this with your actual fetch call to get attestation data
-  return {
-    uid: uuid,
-    schema: "#159",
-    isEndorsement: true,
-    name: "Worked with",
-    domain: "via 0x794ce...",
-    context: "via 0x794ce...",
-    ipfsHash: "ipfs://QmZaTm...Jx3ziBQnPS",
-    from: "0x07a059F968efF2D70973Ed90abfb5B93DD6050198888792b5EAE5798BdE677E",
-    to: "0xd34d059F968efF2D70973Ed90abfb5B93DD6050198888792b5EAE5798BdE677E",
-    created: "06/22/2024 3:13:21 am",
-    expiration: "Never",
-    revoked: "No",
-  };
-};
-
 export const fetchTokenName = async (): Promise<any> => {
   try {
     const name = await contract.call("name");

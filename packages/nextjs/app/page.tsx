@@ -11,7 +11,7 @@ const Home: NextPage = () => {
   const connectedAddress = useAccount();
   return (
     <>
-     <Dashboard />
+      <Dashboard />
     </>
   );
 };

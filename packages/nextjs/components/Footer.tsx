@@ -27,25 +27,16 @@ export const Footer = () => {
   return (
     <div className="min-h-0 py-5 px-1 mb-11 lg:mb-0 bg-[#475299]">
       <div>
-          <SwitchTheme
-            className={`pointer-events-auto ${
-              isLocalNetwork ? "self-end md:self-auto" : ""
-            }`}
-          />
+        <SwitchTheme
+          className={`pointer-events-auto ${
+            isLocalNetwork ? "self-end md:self-auto" : ""
+          }`}
+        />
       </div>
       <div className="w-full">
         <ul className="menu menu-horizontal w-full">
           <div className="flex justify-center items-center gap-2 text-sm w-full">
-            <div className="text-center">
-              <a
-                href="https://olas.info/"
-                target="_blank"
-                rel="noreferrer"
-                className="link"
-              >
-                Visit Olas
-              </a>
-            </div>
+
           </div>
         </ul>
       </div>
