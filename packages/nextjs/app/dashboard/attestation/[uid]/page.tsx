@@ -40,7 +40,8 @@ export default function AttestationPage({
         },
         recipient: `0x` + rawAttestation.recipient.toString(16),
         revocable: rawAttestation.revocable.toString(),
-        revocation_time: rawAttestation.revocation_time.toString(),
+        revocation_time:
+          rawAttestation.revocation_time.toString() === "0" ? "False" : "True",
         schema_uid: rawAttestation.schema_uid.toString(),
         time: timeAgo(rawAttestation.time.toString()),
         uid: rawAttestation.uid.toString(),
@@ -137,7 +138,7 @@ export default function AttestationPage({
                     </tr>
                     <tr className="border-b">
                       <td className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-50">
-                        Expiration
+                        Revoked
                       </td>
                       <td className="px-4 py-2 text-sm text-gray-900">
                         {attestation.revocation_time}
