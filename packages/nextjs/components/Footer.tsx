@@ -18,9 +18,6 @@ import { getBlockExplorerLink } from "~~/utils/scaffold-stark";
  * Site footer
  */
 export const Footer = () => {
-  const nativeCurrencyPrice = useGlobalState(
-    (state) => state.nativeCurrencyPrice,
-  );
   const { targetNetwork } = useTargetNetwork();
   const isLocalNetwork = targetNetwork.id === devnet.id;
 

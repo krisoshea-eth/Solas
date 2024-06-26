@@ -136,7 +136,7 @@ const Attestations = () => {
                   </thead>
                   <tbody>
                     {attestations.map((schema, index) => (
-                      <tr key={index} className="border-b">
+                      <tr key={index} className="border-b text-center">
                         <td className="px-4 py-2">
                           <AttestationLink uid={schema.uid} />
                         </td>

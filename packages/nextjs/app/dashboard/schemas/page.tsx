@@ -102,8 +102,8 @@ const Schemas = () => {
             </div>
           ) : (
             <div>
-              <div className="overflow-x-auto shadow-md rounded-lg">
-                <table className="min-w-full bg-white border border-gray-200 ">
+              <div className="overflow-x-auto shadow-md rounded-lg ">
+                <table className="min-w-full bg-white border border-gray-200">
                   <thead>
                     <tr className="bg-gray-100 border-b">
                       <th className="px-4 py-2 text-[#495FA9]">UID</th>
@@ -115,11 +115,11 @@ const Schemas = () => {
                   </thead>
                   <tbody>
                     {schemas.map((schema, index) => (
-                      <tr key={index} className="border-b">
-                        <td className="px-4 py-2">
-                          <SchemaLink uid={schema.uid} />
+                      <tr key={index} className="border-b ">
+                        <td className="px-4 py-2 text-[#495FA9] text-center">
+                          {schema.uid.toString()}
                         </td>
-                        <td className="px-4 py-2 text-[#495FA9]">
+                        <td className="px-4 py-2 text-[#495FA9] text-center">
                           {schema.caller}
                         </td>
                         <td className="px-4 py-2 text-[#495FA9]">
