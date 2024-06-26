@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-stark/useScaffoldEventHistory";
 import Modal from "~~/components/Modal";
 import RegisterSchemaForm from "~~/components/forms/RegisterSchemaForm";
+import { shortAddress } from "~~/utils/utils";
 
 const Schemas = () => {
   const [totalSchemas, setTotalSchemas] = useState<number>(0);
@@ -31,7 +32,7 @@ const Schemas = () => {
         eventData.map((event) => ({
           uid: event.args.uid,
           schema: event.args.schema_record,
-          caller: event.args.caller,
+          caller:shortAddress(event.args.caller),
         })),
       );
     }

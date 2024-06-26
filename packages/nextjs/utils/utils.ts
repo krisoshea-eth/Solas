@@ -131,11 +131,11 @@ export const shortAddress = (addr: string): string => {
     return "";
   }
   return (
-    addr.toString().substring(0, 6) +
+    addr.toString().substring(0, 8) +
     "..." +
     addr
       .toString()
-      .substring(addr.toString().length - 6, addr.toString().length + 1)
+      .substring(addr.toString().length - 8, addr.toString().length + 1)
   );
 };
 

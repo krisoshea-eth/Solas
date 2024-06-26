@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-stark/useScaffoldEventHistory";
 import Modal from "~~/components/Modal";
 import CreateAttestationForm from "~~/components/forms/CreateAttestationForm";
+import { shortAddress, timeAgo } from "~~/utils/utils";
 
 const Attestations = () => {
   const [totalAttestations, setTotalAttestations] = useState<number>(0);
@@ -41,11 +42,11 @@ const Attestations = () => {
       setTotalAttestations(eventData.length);
       setAttestations(
         eventData.map((event) => ({
-          recipient: event.args.recipient,
-          attester: event.args.attester,
+          recipient: shortAddress(event.args.recipient),
+          attester: shortAddress(event.args.attester),
           uid: event.args.uid,
-          schema: event.args.schema_uid,
-          timestamp: event.args.timestamp,
+          schema: (event.args.schema_uid).toString(),
+          timestamp: timeAgo((event.args.timestamp).toString()),
         }))
       );
     }
