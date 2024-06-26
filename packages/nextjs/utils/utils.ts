@@ -86,6 +86,26 @@ export const fetchAllAttestations = async () => {
   ];
 };
 
+export function decodePendingWord(
+  pendingWord: bigint,
+  pendingWordLen: bigint,
+): string {
+  // Convert the pending_word to a hexadecimal string
+  let hexString = pendingWord.toString(16);
+
+  // Pad the string to ensure we have all the bytes
+  hexString = hexString.padStart(Number(pendingWordLen) * 2, "0");
+
+  // Convert each byte (2 hex characters) to its ASCII representation
+  let decodedString = "";
+  for (let i = 0; i < hexString.length; i += 2) {
+    const byte = parseInt(hexString.substr(i, 2), 16);
+    decodedString += String.fromCharCode(byte);
+  }
+
+  return decodedString;
+}
+
 export const fetchTokenName = async (): Promise<any> => {
   try {
     const name = await contract.call("name");

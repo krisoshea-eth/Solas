@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Attestation, timeAgo } from "~~/utils/utils";
+import { Attestation, decodePendingWord, timeAgo } from "~~/utils/utils";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
 
 export default function AttestationPage({
@@ -27,14 +27,18 @@ export default function AttestationPage({
 
   useEffect(() => {
     if (isSuccess && fetchedAttestation) {
+      console.log("Fetched Attestation:", fetchedAttestation);
       // Check if fetchedAttestation is an object
       const rawAttestation = fetchedAttestation as any;
       const mappedAttestation: Attestation = {
-        attester: rawAttestation.attester.toString(),
+        attester: `0x` + rawAttestation.attester.toString(16),
         data: {
-          data: rawAttestation.data.data.toString(),
+          data: decodePendingWord(
+            rawAttestation.data.pending_word,
+            rawAttestation.data.pending_word_len,
+          ),
         },
-        recipient: rawAttestation.recipient.toString(),
+        recipient: `0x` + rawAttestation.recipient.toString(16),
         revocable: rawAttestation.revocable.toString(),
         revocation_time: rawAttestation.revocation_time.toString(),
         schema_uid: rawAttestation.schema_uid.toString(),
@@ -73,14 +77,14 @@ export default function AttestationPage({
               </p>
             </div>
           ) : (
-            <div className="attestation-container p-6 shadow-md rounded-lg bg-[#E9E9F6]">
+            <div className="attestation-container p-6  rounded-lg bg-[#E9E9F6]">
               <div className="mb-4">
                 <span className="block text-sm text-gray-600">UID:</span>
                 <span className="block text-lg font-semibold text-gray-600">
                   {attestation.uid}
                 </span>
               </div>
-              <div className="border rounded-md overflow-hidden">
+              <div className="border rounded-md overflow-hidden shadow-md">
                 <table className="min-w-full bg-white">
                   <tbody>
                     <tr className="border-b">
