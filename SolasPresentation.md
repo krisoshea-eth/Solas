@@ -44,5 +44,11 @@ data: {
 
 ## Sepolia Deployment Addresses
 
+25th June
 SchemaRegistry: 0x067bdf6bf6f1b72315c541abdc443cdd55992ea29546933ddfec19cb200fce87
 AttestationRegistry: 0x034f38c70a7d4b1bab0b919c923545e74b188f95915b92b5febf12b0dafe6686
+
+26th June - Finale
+SchemaRegistry: 0x0011bc1356dda0d57fe748a2f30f53e65f8cc5a16c46be71b495d71004ac9b08
+AttestationRegistry: 0x0755a87fa1f416ad81a1ae94bc29e17bf4a2fa820c61a35ccdcdc08746cd319c
+
