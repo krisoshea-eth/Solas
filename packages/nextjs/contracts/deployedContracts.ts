@@ -5,15 +5,14 @@
 
 const deployedContracts = {
   devnet: {
-    AttestationRegistry: {
+    SchemaRegistry: {
       address:
-        "0x043a0fcd4152f67425ca045f81babfdf9d8a0ed7a3e4dda1f1a5bfc094a8d5da",
+        "0x029ea3f8f406a659c903a3e02ed102f0a21048fd40639a96f57637aadc1d6999",
       abi: [
         {
           type: "impl",
-          name: "AttestationRegistryImpl",
-          interface_name:
-            "contracts::AttestationRegistry::IAttestationRegistry",
+          name: "SchemaRegistryImpl",
+          interface_name: "contracts::SchemaRegistry::ISchemaRegistry",
         },
         {
           type: "struct",
@@ -48,77 +47,15 @@ const deployedContracts = {
           ],
         },
         {
-          type: "struct",
-          name: "contracts::AttestationRegistry::Attestation",
-          members: [
-            {
-              name: "uid",
-              type: "core::integer::u128",
-            },
-            {
-              name: "schema_uid",
-              type: "core::integer::u128",
-            },
-            {
-              name: "time",
-              type: "core::integer::u64",
-            },
-            {
-              name: "recipient",
-              type: "core::starknet::contract_address::ContractAddress",
-            },
-            {
-              name: "attester",
-              type: "core::starknet::contract_address::ContractAddress",
-            },
-            {
-              name: "data",
-              type: "core::byte_array::ByteArray",
-            },
-            {
-              name: "revocable",
-              type: "core::bool",
-            },
-            {
-              name: "revocation_time",
-              type: "core::integer::u64",
-            },
-          ],
-        },
-        {
           type: "interface",
-          name: "contracts::AttestationRegistry::IAttestationRegistry",
+          name: "contracts::SchemaRegistry::ISchemaRegistry",
           items: [
             {
               type: "function",
-              name: "get_attestation",
+              name: "register",
               inputs: [
                 {
-                  name: "attestation_uid",
-                  type: "core::integer::u128",
-                },
-              ],
-              outputs: [
-                {
-                  type: "contracts::AttestationRegistry::Attestation",
-                },
-              ],
-              state_mutability: "view",
-            },
-            {
-              type: "function",
-              name: "attest",
-              inputs: [
-                {
-                  name: "schema_uid",
-                  type: "core::integer::u128",
-                },
-                {
-                  name: "recipient",
-                  type: "core::starknet::contract_address::ContractAddress",
-                },
-                {
-                  name: "data",
+                  name: "schema",
                   type: "core::byte_array::ByteArray",
                 },
                 {
@@ -135,104 +72,52 @@ const deployedContracts = {
             },
             {
               type: "function",
-              name: "revoke",
+              name: "get_schema",
               inputs: [
                 {
-                  name: "schema_uid",
-                  type: "core::integer::u128",
-                },
-                {
-                  name: "attestation_uid",
+                  name: "uid",
                   type: "core::integer::u128",
                 },
               ],
-              outputs: [],
-              state_mutability: "external",
-            },
-          ],
-        },
-        {
-          type: "constructor",
-          name: "constructor",
-          inputs: [
-            {
-              name: "schema_registry_address",
-              type: "core::starknet::contract_address::ContractAddress",
+              outputs: [
+                {
+                  type: "(core::integer::u128, core::bool, core::byte_array::ByteArray)",
+                },
+              ],
+              state_mutability: "view",
             },
           ],
         },
         {
           type: "event",
-          name: "contracts::AttestationRegistry::AttestationRegistry::Attested",
+          name: "contracts::SchemaRegistry::SchemaRegistry::Registered",
           kind: "struct",
           members: [
-            {
-              name: "recipient",
-              type: "core::starknet::contract_address::ContractAddress",
-              kind: "key",
-            },
-            {
-              name: "attester",
-              type: "core::starknet::contract_address::ContractAddress",
-              kind: "key",
-            },
             {
               name: "uid",
               type: "core::integer::u128",
-              kind: "data",
-            },
-            {
-              name: "schema_uid",
-              type: "core::integer::u128",
               kind: "key",
             },
             {
-              name: "timestamp",
-              type: "core::integer::u64",
+              name: "caller",
+              type: "core::starknet::contract_address::ContractAddress",
+              kind: "data",
+            },
+            {
+              name: "schema_record",
+              type: "core::byte_array::ByteArray",
               kind: "data",
             },
           ],
         },
         {
           type: "event",
-          name: "contracts::AttestationRegistry::AttestationRegistry::Revoked",
-          kind: "struct",
-          members: [
-            {
-              name: "recipient",
-              type: "core::starknet::contract_address::ContractAddress",
-              kind: "key",
-            },
-            {
-              name: "attester",
-              type: "core::starknet::contract_address::ContractAddress",
-              kind: "key",
-            },
-            {
-              name: "schema_uid",
-              type: "core::integer::u128",
-              kind: "key",
-            },
-            {
-              name: "attestation_uid",
-              type: "core::integer::u128",
-              kind: "data",
-            },
-          ],
-        },
-        {
-          type: "event",
-          name: "contracts::AttestationRegistry::AttestationRegistry::Event",
+          name: "contracts::SchemaRegistry::SchemaRegistry::Event",
           kind: "enum",
           variants: [
             {
-              name: "Attested",
-              type: "contracts::AttestationRegistry::AttestationRegistry::Attested",
-              kind: "nested",
-            },
-            {
-              name: "Revoked",
-              type: "contracts::AttestationRegistry::AttestationRegistry::Revoked",
+              name: "Registered",
+              type: "contracts::SchemaRegistry::SchemaRegistry::Registered",
               kind: "nested",
             },
           ],
@@ -243,7 +128,7 @@ const deployedContracts = {
   sepolia: {
     SchemaRegistry: {
       address:
-        "0x067bdf6bf6f1b72315c541abdc443cdd55992ea29546933ddfec19cb200fce87",
+        "0x0011bc1356dda0d57fe748a2f30f53e65f8cc5a16c46be71b495d71004ac9b08",
       abi: [
         {
           type: "impl",
@@ -362,7 +247,7 @@ const deployedContracts = {
     },
     AttestationRegistry: {
       address:
-        "0x034f38c70a7d4b1bab0b919c923545e74b188f95915b92b5febf12b0dafe6686",
+        "0x0755a87fa1f416ad81a1ae94bc29e17bf4a2fa820c61a35ccdcdc08746cd319c",
       abi: [
         {
           type: "impl",
