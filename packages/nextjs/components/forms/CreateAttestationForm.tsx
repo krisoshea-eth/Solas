@@ -26,8 +26,8 @@ const CreateAttestationForm = () => {
     setSchema(fetchedSchema);
     setRevocable(false);
     setRecipient(recipient);
-    console.log('fetchedSchema', fetchedSchema)
-    console.log('schema', schema)
+    console.log("fetchedSchema", fetchedSchema);
+    console.log("schema", schema);
 
     setData(data);
     try {
