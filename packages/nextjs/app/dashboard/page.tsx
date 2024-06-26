@@ -12,9 +12,9 @@ const Dashboard = () => {
             <div className="flex flex-col bg-[#475299] px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <CheckBadgeIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Tinker with your smart contract using the{" "}
+              Start making attestations on existing schemas using the{" "}
                 <Link href="/dashboard/attestations" passHref className="link">
-                  Make Attestations
+                  Attestations 
                 </Link>{" "}
                 tab.
               </p>
@@ -22,9 +22,9 @@ const Dashboard = () => {
             <div className="flex flex-col bg-[#475299] px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <DocumentTextIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Explore attestation and schemas via the{" "}
+              Explore the schemas or create a new schema using the{" "}
                 <Link href="/dashboard/schemas" passHref className="link">
-                  Create Schemas
+                Schemas
                 </Link>{" "}
                 tab.
               </p>

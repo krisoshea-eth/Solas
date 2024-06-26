@@ -4,7 +4,13 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bars3Icon, BugAntIcon,CheckBadgeIcon,DocumentTextIcon,CodeBracketIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  BugAntIcon,
+  CheckBadgeIcon,
+  DocumentTextIcon,
+  CodeBracketIcon,
+} from "@heroicons/react/24/outline";
 import { useOutsideClick } from "~~/hooks/scaffold-stark";
 import { CustomConnectButton } from "~~/components/scaffold-stark/CustomConnectButton";
 import { FaucetButton } from "~~/components/scaffold-stark/FaucetButton";
@@ -50,8 +56,10 @@ export const HeaderMenuLinks = () => {
               href={href}
               passHref
               className={`${
-                isActive ? "bg-secondary shadow-md" : ""
-              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+                isActive
+                  ? "bg-[#E9E9F6] shadow-md text-[#475299]"
+                  : "text-[#E9E9F6]"
+              } hover:bg-[#E9E9F6] hover:shadow-md hover:text-[#475299] focus:bg-[#E9E9F6] focus:text-[#475299] active:bg-[#E9E9F6] active:text-[#475299] py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
             >
               {icon}
               <span>{label}</span>
@@ -71,9 +79,8 @@ export const Header = () => {
   const burgerMenuRef = useRef<HTMLDivElement>(null);
   useOutsideClick(
     burgerMenuRef,
-    useCallback(() => setIsDrawerOpen(false), []),
+    useCallback(() => setIsDrawerOpen(false), [])
   );
-
   return (
     <div className="sticky lg:static top-0 navbar bg-[#475299] min-h-0 flex-shrink-0 justify-between z-20  px-0 sm:px-2">
       <div className="navbar-start w-auto lg:w-1/2">
