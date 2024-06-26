@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-stark/useScaffoldWriteContract";
 
 const CreateAttestationForm = () => {
-  const [schema, setSchema] = useState<number>(0);
+  const [schema, setSchema] = useState<number>(15);
   const [recipient, setRecipient] = useState<string>("");
   const [data, setData] = useState<string>("");
 
@@ -15,20 +15,21 @@ const CreateAttestationForm = () => {
     useScaffoldWriteContract({
       contractName: "AttestationRegistry",
       functionName: "attest",
-      args: [15, recipient, data, false],
+      args: [schema as number, recipient, data, false],
     });
 
   const handleSubmit = async (formData: FormData) => {
     const revocableFetched = formData.get("revocable") as string;
     const recipient = formData.get("recipient") as string;
     const data = formData.get("data") as string;
+    const fetchedSchema = formData.get("schema") as string;
+    setSchema(parseInt(fetchedSchema));
+    setRevocable(false);
     setRecipient(recipient);
     setData(data);
-    setSchema(15);
-    setRevocable(revocableFetched === "true");
     try {
       await writeAsync({
-        args: [15, recipient, data, false],
+        args: [schema, recipient, data, false],
       });
     } catch (err) {
       console.error("Error submitting transaction:", err);

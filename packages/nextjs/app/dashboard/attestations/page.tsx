@@ -46,7 +46,7 @@ const Attestations = () => {
           uid: event.args.uid,
           schema: event.args.schema_uid,
           timestamp: event.args.timestamp,
-        })),
+        }))
       );
     }
   }, [eventData]);
@@ -67,15 +67,15 @@ const Attestations = () => {
         <div className="text-3xl font-bold text-[#495FA9]">
           {totalAttestations}
         </div>
-        <div className="text-gray-600">Total Schemas</div>
+        <div className="text-gray-600">Total Attestations</div>
       </div>
     </div>
   );
 
   return (
     <div>
-      <div className="p-4 bg-[#E9E9F6]">
-        <div className="p-6 rounded-lg shadow-md">
+      <div className="p-4 bg-[#E9E9F6]  min-h-screen">
+        <div className="p-6 rounded-lg ">
           <div className="flex justify-between items-center mb-6">
             <div>
               <h1 className="text-2xl font-bold text-[#495FA9]">
@@ -101,7 +101,8 @@ const Attestations = () => {
           </div>
           <DashboardStats totalAttestations={totalAttestations} />
           {isLoading ? (
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center flex-col mt-24">
+              {" "}
               <svg
                 aria-hidden="true"
                 className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -117,48 +118,51 @@ const Attestations = () => {
                   fill="rgb(59 130 246)"
                 />
               </svg>
+              <p className="text-[#495FA9]">Loading all the attestations...</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full bg-white border border-gray-200">
-                <thead>
-                  <tr className="bg-gray-100 border-b">
-                    <th className="px-4 py-2 text-[#495FA9]">UID</th>
-                    <th className="px-4 py-2 text-[#495FA9]">Attester</th>
-                    <th className="px-4 py-2 text-[#495FA9]">Recipient</th>
-                    <th className="px-4 py-2 text-[#495FA9]">Schema UID</th>
-                    <th className="px-4 py-2 text-[#495FA9]">Timestamp</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {attestations.map((schema, index) => (
-                    <tr key={index} className="border-b">
-                      <td className="px-4 py-2">
-                        <AttestationLink uid={schema.uid} />
-                      </td>
-                      <td className="px-4 py-2 text-[#495FA9]">
-                        {schema.attester}
-                      </td>
-                      <td className="px-4 py-2 text-[#495FA9]">
-                        {schema.recipient}
-                      </td>
-                      <td className="px-4 py-2 text-[#495FA9]">
-                        {schema.schema}
-                      </td>
-                      <td className="px-4 py-2 text-[#495FA9]">
-                        {schema.timestamp}
-                      </td>
+            <div>
+              <div className="overflow-x-auto shadow-md rounded-lg">
+                <table className="min-w-full bg-white border border-gray-200">
+                  <thead>
+                    <tr className="bg-gray-100 border-b">
+                      <th className="px-4 py-2 text-[#495FA9]">UID</th>
+                      <th className="px-4 py-2 text-[#495FA9]">Attester</th>
+                      <th className="px-4 py-2 text-[#495FA9]">Recipient</th>
+                      <th className="px-4 py-2 text-[#495FA9]">Schema UID</th>
+                      <th className="px-4 py-2 text-[#495FA9]">Timestamp</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {attestations.map((schema, index) => (
+                      <tr key={index} className="border-b">
+                        <td className="px-4 py-2">
+                          <AttestationLink uid={schema.uid} />
+                        </td>
+                        <td className="px-4 py-2 text-[#495FA9]">
+                          {schema.attester}
+                        </td>
+                        <td className="px-4 py-2 text-[#495FA9]">
+                          {schema.recipient}
+                        </td>
+                        <td className="px-4 py-2 text-[#495FA9]">
+                          {schema.schema}
+                        </td>
+                        <td className="px-4 py-2 text-[#495FA9]">
+                          {schema.timestamp}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="mt-4 text-center">
+                <a className="text-[#495FA9]" href="/attestations">
+                  View all attestations
+                </a>
+              </div>
             </div>
           )}
-          <div className="mt-4 text-center">
-            <a className="text-blue-600" href="/attestations">
-              View all attestations
-            </a>
-          </div>
         </div>
       </div>
     </div>
