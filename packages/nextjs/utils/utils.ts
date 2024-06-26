@@ -8,19 +8,16 @@ const contractAddress =
 const contract = new Contract(ERC20abi, contractAddress, provider);
 
 export type Attestation = {
-  uid: string;
-  schema: string;
-  isEndorsement: boolean;
-  name: string;
-  domain: string;
-  context: string;
-  ipfsHash: string;
-  from: string;
-  to: string;
-  created: string;
-  expiration: string;
-  revoked: string;
+  attester: any;
+  data: any;
+  recipient: any;
+  revocable: any;
+  revocation_time: any;
+  schema_uid: any;
+  time: any;
+  uid: any;
 };
+
 export type Schema = {
   uid: string;
   schema: string;
@@ -89,25 +86,6 @@ export const fetchAllAttestations = async () => {
   ];
 };
 
-// Dummy fetch function to simulate fetching attestation data
-export const fetchAttestation = async (uuid: string): Promise<Attestation> => {
-  // Replace this with your actual fetch call to get attestation data
-  return {
-    uid: uuid,
-    schema: "#159",
-    isEndorsement: true,
-    name: "Worked with",
-    domain: "via 0x794ce...",
-    context: "via 0x794ce...",
-    ipfsHash: "ipfs://QmZaTm...Jx3ziBQnPS",
-    from: "0x07a059F968efF2D70973Ed90abfb5B93DD6050198888792b5EAE5798BdE677E",
-    to: "0xd34d059F968efF2D70973Ed90abfb5B93DD6050198888792b5EAE5798BdE677E",
-    created: "06/22/2024 3:13:21 am",
-    expiration: "Never",
-    revoked: "No",
-  };
-};
-
 export const fetchTokenName = async (): Promise<any> => {
   try {
     const name = await contract.call("name");
@@ -134,11 +112,11 @@ export const shortAddress = (addr: string): string => {
     return "";
   }
   return (
-    addr.toString().substring(0, 6) +
+    addr.toString().substring(0, 8) +
     "..." +
     addr
       .toString()
-      .substring(addr.toString().length - 6, addr.toString().length + 1)
+      .substring(addr.toString().length - 8, addr.toString().length + 1)
   );
 };
 

@@ -10,9 +10,9 @@ use starknet::SyscallResult;
 // use starknet::Store;
 use starknet::storage_access::Store;
 use starknet::storage_access::{StorageAddress, StorageBaseAddress};
+use starknet::syscalls::call_contract_syscall;
 use starknet::syscalls::storage_read_syscall;
 use starknet::syscalls::storage_write_syscall;
-use starknet::syscalls::call_contract_syscall;
 use starknet::{get_block_timestamp, get_caller_address};
 
 // Define structs
@@ -173,31 +173,35 @@ mod SAS {
         }
 
         fn attest(ref self: ContractState, request: AttestationRequest) -> u128 {
-    
-                let attestation = Attestation {
-                    uid: EMPTY_UID,
-                    schema_uid: request.schema_uid,
-                    ref_uid: request.refUID,
-                    time: get_block_timestamp(),
-                    expiration_time: request.expirationTime,
-                    recipient: request.recipient,
-                    attester: get_caller_address(),
-                    data: request.data,
-                };
-    
-                self.current_uid.write(self.current_uid.read() + 1);
-                let uid = self.current_uid.read();
-                let timestamp = get_block_timestamp();
-    
-                self.db.write(uid, attestation);
-                self.emit(Event::Attested(Attested { 
-                    recipient: request.recipient, 
-                    attester: get_caller_address(),
-                    uid, 
-                    schema_uid: request.schema_uid,
-                    timestamp
-                }));
-    
+            let attestation = Attestation {
+                uid: EMPTY_UID,
+                schema_uid: request.schema_uid,
+                ref_uid: request.refUID,
+                time: get_block_timestamp(),
+                expiration_time: request.expirationTime,
+                recipient: request.recipient,
+                attester: get_caller_address(),
+                data: request.data,
+            };
+
+            self.current_uid.write(self.current_uid.read() + 1);
+            let uid = self.current_uid.read();
+            let timestamp = get_block_timestamp();
+
+            self.db.write(uid, attestation);
+            self
+                .emit(
+                    Event::Attested(
+                        Attested {
+                            recipient: request.recipient,
+                            attester: get_caller_address(),
+                            uid,
+                            schema_uid: request.schema_uid,
+                            timestamp
+                        }
+                    )
+                );
+
             uid
         }
 
@@ -218,12 +222,10 @@ mod SAS {
         fn get_timestamp(self: @ContractState, data: felt252) -> u64 {
             self.timestamps.read(data)
         }
-
     }
 
     #[generate_trait]
     impl InternalFunctions of InternalFunctionsTrait {
-
         fn _timestamp(ref self: ContractState, data: felt252, time: u64) {
             assert(self.timestamps.read(data) == 0, 'Already timestamped');
             self.timestamps.write(data, time);

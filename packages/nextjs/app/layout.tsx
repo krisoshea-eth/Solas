@@ -4,15 +4,15 @@ import "~~/styles/globals.css";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "Scaffold-Stark",
+  title: "Solas",
   description: "Fast track your starknet journey",
-  icons: "/logo.ico",
+  icons: "/solas.png",
 };
 
 const ScaffoldStarkApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning>
-      <body>
+      <body className="bg-[#E9E9F6]">
         <ThemeProvider enableSystem>
           <ScaffoldStarkAppWithProviders>
             {children}

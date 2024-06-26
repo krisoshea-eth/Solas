@@ -4,7 +4,13 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  BugAntIcon,
+  CheckBadgeIcon,
+  DocumentTextIcon,
+  CodeBracketIcon,
+} from "@heroicons/react/24/outline";
 import { useOutsideClick } from "~~/hooks/scaffold-stark";
 import { CustomConnectButton } from "~~/components/scaffold-stark/CustomConnectButton";
 import { FaucetButton } from "~~/components/scaffold-stark/FaucetButton";
@@ -18,12 +24,22 @@ type HeaderMenuLink = {
 export const menuLinks: HeaderMenuLink[] = [
   {
     label: "Home",
-    href: "/",
+    href: "/dashboard",
   },
   {
-    label: "Debug Contracts",
+    label: "Attestations",
+    href: "/dashboard/attestations",
+    icon: <CheckBadgeIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Schemas",
+    href: "/dashboard/schemas",
+    icon: <DocumentTextIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Contracts",
     href: "/debug",
-    icon: <BugAntIcon className="h-4 w-4" />,
+    icon: <CodeBracketIcon className="h-4 w-4" />,
   },
 ];
 
@@ -40,8 +56,10 @@ export const HeaderMenuLinks = () => {
               href={href}
               passHref
               className={`${
-                isActive ? "bg-secondary shadow-md" : ""
-              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+                isActive
+                  ? "bg-[#E9E9F6] shadow-md text-[#475299]"
+                  : "text-[#E9E9F6]"
+              } hover:bg-[#E9E9F6] hover:shadow-md hover:text-[#475299] focus:bg-[#E9E9F6] focus:text-[#475299] active:bg-[#E9E9F6] active:text-[#475299] py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
             >
               {icon}
               <span>{label}</span>
@@ -63,9 +81,8 @@ export const Header = () => {
     burgerMenuRef,
     useCallback(() => setIsDrawerOpen(false), []),
   );
-
   return (
-    <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
+    <div className="sticky lg:static top-0 navbar bg-[#475299] min-h-0 flex-shrink-0 justify-between z-20  px-0 sm:px-2">
       <div className="navbar-start w-auto lg:w-1/2">
         <div className="lg:hidden dropdown" ref={burgerMenuRef}>
           <label
@@ -91,24 +108,6 @@ export const Header = () => {
             </ul>
           )}
         </div>
-        <Link
-          href="/"
-          passHref
-          className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0"
-        >
-          <div className="flex relative w-10 h-10">
-            <Image
-              alt="SE2 logo"
-              className="cursor-pointer"
-              fill
-              src="/logo.svg"
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-bold leading-tight">Scaffold-Stark</span>
-            <span className="text-xs">Starknet dev stack</span>
-          </div>
-        </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
           <HeaderMenuLinks />
         </ul>
